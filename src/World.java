@@ -174,7 +174,7 @@ public class World extends JPanel {
         this.m.drawImage(buffer);
 
         BufferedImage small = world.getSubimage(player.getPx() - SPLITSCREEN_WIDTH/2, player.getPy() - SPLITSCREEN_HEIGHT/2, SPLITSCREEN_WIDTH, SPLITSCREEN_HEIGHT);
-        BufferedImage mini = world.getSubimage(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+//        BufferedImage mini = world.getSubimage(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
         //draw each instance of WorldItem
         for (int i = 0; i < worldItems.size(); i++) {
@@ -186,7 +186,7 @@ public class World extends JPanel {
 
 
         //temp minimap to show layout
-        g2.drawImage(mini, SPLITSCREEN_WIDTH / 2 - SPLITSCREEN_WIDTH / 8 + 10, SPLITSCREEN_HEIGHT - 210, 200, 200, null);
+//        g2.drawImage(mini, SPLITSCREEN_WIDTH / 2 - SPLITSCREEN_WIDTH / 8 + 10, SPLITSCREEN_HEIGHT - 210, 200, 200, null);
 
     }
 }
