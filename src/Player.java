@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class Player extends WorldItem{
     private int px;
     private int py;
-    private int moveSpeed = 1;
+    private int moveSpeed = 10;
     private boolean UpPressed;
     private boolean DownPressed;
     private boolean RightPressed;
@@ -246,9 +246,13 @@ public class Player extends WorldItem{
                             this.setX((int) intersection.getX() + (int) intersection.getWidth());
 
                         } else {
-                            this.setY((int) intersection.getY() + (int) intersection.getHeight());
-                            if(item instanceof V_PushableWall)
+                            if(item instanceof V_PushableWall){
                                 item.setY(item.getY() - 1);
+                                ((V_PushableWall) item).checkBorder();
+                                this.setY(item.getY() + item.getImg().getHeight(null));
+                            }
+                            else
+                            this.setY((int) intersection.getY() + (int) intersection.getHeight());
                         }
                     }
                     //from top into something
@@ -259,24 +263,29 @@ public class Player extends WorldItem{
                         } else if (this.getX() + this.getImg().getWidth(null) <= item.getX() + moveSpeed) {
                             this.setX((int) intersection.getX() - this.getImg().getWidth(null));
                         } else {
-                            this.setY((int) intersection.getY() - this.getImg().getHeight(null));
-                            if(item instanceof V_PushableWall)
+                            if(item instanceof V_PushableWall){
                                 item.setY(item.getY() + 1);
+                                ((V_PushableWall) item).checkBorder();
+                                this.setY(item.getY() - this.getImg().getHeight(null));
+                            }
+                            else
+                            this.setY((int) intersection.getY() - this.getImg().getHeight(null));
+
                         }
                     }
                     //from right into something
                     else if (this.getX() >= item.getX() + item.getImg().getWidth(null) - moveSpeed) {
-                        this.setX((int) intersection.getX() + (int) intersection.getWidth());
                         if(item instanceof V_PushableWall){
                             item.setX(item.getX() - 1);
                         }
+                        this.setX((int) intersection.getX() + (int) intersection.getWidth());
                     }
                     //from left into something
                     else if (this.getX() + this.getImg().getWidth(null) <= item.getX() + moveSpeed) {
-                        this.setX((int) intersection.getX() - this.getImg().getWidth(null));
                         if(item instanceof V_PushableWall){
                             item.setX(item.getX() + 1);
                         }
+                        this.setX((int) intersection.getX() - this.getImg().getWidth(null));
                     }
                 }
             }
