@@ -3,7 +3,7 @@ package src;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class V_PushableWall extends PushableWall {
+public class V_PushableWall extends Wall {
     private static Image img;
 
     void setImg(BufferedImage image) {
