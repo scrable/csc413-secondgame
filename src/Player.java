@@ -3,6 +3,7 @@ package src;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public class Player extends WorldItem{
     private int px;
@@ -226,4 +227,59 @@ public class Player extends WorldItem{
         World.worldItems.add(this);
     }
 
+     void collisions() {
+        ArrayList<WorldItem> worldItems = World.worldItems;
+        for (int i = 0; i < worldItems.size(); i++) {
+            WorldItem item = worldItems.get(i);
+
+            if (item instanceof Wall) {
+                Rectangle thisRectangle = new Rectangle(this.getX() + this.getAx(), this.getY() + this.getAy(), this.getImg().getWidth(null), this.getImg().getHeight(null));
+                Rectangle itemRectangle = new Rectangle(item.getX(), item.getY(), item.getImg().getWidth(null), item.getImg().getHeight(null));
+                if (thisRectangle.intersects(itemRectangle)) {
+
+                    Rectangle intersection = thisRectangle.intersection(itemRectangle);
+                    //from bottom into something
+                    if (this.getY() >= item.getY() + item.getImg().getHeight(null) - moveSpeed) {
+                        if (this.getX() + this.getImg().getWidth(null) <= item.getX() + moveSpeed) {
+                            this.setX((int) intersection.getX() - this.getImg().getWidth(null));
+                        } else if (this.getX() >= item.getX() + item.getImg().getWidth(null) - moveSpeed) {
+                            this.setX((int) intersection.getX() + (int) intersection.getWidth());
+
+                        } else {
+                            this.setY((int) intersection.getY() + (int) intersection.getHeight());
+                            if(item instanceof V_PushableWall)
+                                item.setY(item.getY() - 1);
+                        }
+                    }
+                    //from top into something
+                    else if (this.getY() <= item.getY() - this.getImg().getHeight(null) + moveSpeed) {
+                        if (this.getX() >= item.getX() + item.getImg().getWidth(null) - moveSpeed) {
+                            this.setX((int) intersection.getX() + (int) intersection.getWidth());
+
+                        } else if (this.getX() + this.getImg().getWidth(null) <= item.getX() + moveSpeed) {
+                            this.setX((int) intersection.getX() - this.getImg().getWidth(null));
+                        } else {
+                            this.setY((int) intersection.getY() - this.getImg().getHeight(null));
+                            if(item instanceof V_PushableWall)
+                                item.setY(item.getY() + 1);
+                        }
+                    }
+                    //from right into something
+                    else if (this.getX() >= item.getX() + item.getImg().getWidth(null) - moveSpeed) {
+                        this.setX((int) intersection.getX() + (int) intersection.getWidth());
+                        if(item instanceof V_PushableWall){
+                            item.setX(item.getX() - 1);
+                        }
+                    }
+                    //from left into something
+                    else if (this.getX() + this.getImg().getWidth(null) <= item.getX() + moveSpeed) {
+                        this.setX((int) intersection.getX() - this.getImg().getWidth(null));
+                        if(item instanceof V_PushableWall){
+                            item.setX(item.getX() + 1);
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
