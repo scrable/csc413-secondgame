@@ -26,12 +26,14 @@ public class World extends JPanel {
     private UserInput input1;
 
 
+
     //worlditems
-//    private H_MovableWall hmw;
-//    private V_MovableWall vmw;
 //    private playerLife playerLife;
 //    private Potion potion;
     private BorderWall borderWall;
+    private InnerWall innerWall;
+    private V_PushableWall vpw;
+    private H_PushableWall hpw;
     private Player player;
 
     public static ArrayList<WorldItem> worldItems = new ArrayList<>();
@@ -44,6 +46,7 @@ public class World extends JPanel {
             while (!gameover) {
                 {
                     if(w.player.update()){
+                        w.player.collisions();
                         w.repaint();
 //                        w.player.getImg().flush();
                     }
@@ -82,6 +85,19 @@ public class World extends JPanel {
             borderWall.setImg(ImageIO.read(getClass().getResource("/resources/Block.gif")));
             worldItemsToSpawn.add(borderWall);
 
+            innerWall = new InnerWall();
+            innerWall.setImg(ImageIO.read(getClass().getResource("/resources/Wall1.gif")));
+            worldItemsToSpawn.add(innerWall);
+
+            vpw = new V_PushableWall(-100, -100);
+            vpw.setImg(ImageIO.read(getClass().getResource("/resources/Block_vert.gif")));
+            worldItemsToSpawn.add(vpw);
+
+            hpw = new H_PushableWall(- 100, -100);
+            hpw.setImg(ImageIO.read(getClass().getResource("/resources/Block_hor.gif")));
+            worldItemsToSpawn.add(hpw);
+
+
 //            player.setImg(ImageIO.read(getClass().getResource("/resources/Explorer_up.gif")));
 //            player.setImg(new ImageIcon(url).getImage());
 //            ico = new ImageIcon(url);
@@ -107,6 +123,11 @@ public class World extends JPanel {
 //
 //            //load each player winning image
 //            p1w = ImageIO.read(getClass().getResource("/resources/p1w.png"));
+
+            int numWallsV = (SCREEN_HEIGHT - (borderWall.getImg().getHeight(null) * 2)) / borderWall.getImg().getHeight(null);
+            int numWallsH = (SCREEN_WIDTH - (borderWall.getImg().getWidth(null) * 2)) /  borderWall.getImg().getWidth(null);
+            System.out.println(numWallsV);
+            System.out.println(numWallsH);
 
             for (WorldItem worldItem : worldItemsToSpawn) {
                 worldItem.spawn();
@@ -153,7 +174,7 @@ public class World extends JPanel {
         this.m.drawImage(buffer);
 
         BufferedImage small = world.getSubimage(player.getPx() - SPLITSCREEN_WIDTH/2, player.getPy() - SPLITSCREEN_HEIGHT/2, SPLITSCREEN_WIDTH, SPLITSCREEN_HEIGHT);
-
+        BufferedImage mini = world.getSubimage(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
         //draw each instance of WorldItem
         for (int i = 0; i < worldItems.size(); i++) {
@@ -161,29 +182,11 @@ public class World extends JPanel {
             worldItem.drawImage(buffer, worldItem.getX(), worldItem.getY());
         }
 
-//        URL url = this.getClass().getResource("/resources/Explorer_up.gif");
-//        Image im;
-//        im = new ImageIcon(url).getImage();
-//        g2.drawImage(im, 100, 100, 100, 100, null);
-//        g2.drawImage(player.getImg(), 100, 100, this);
         g2.drawImage(small, 0, 0, null);
-        //draw each tank's lives
-//        int placement;
-//        for (int i = 1; i <= this.player.getLives(); i++) {
-//            placement = (playerLife.getImg().getWidth(null) + 10) * i;
-//            playerLife.drawImage(g2, placement / 2, 10);
-//        }
 
-        //game over screens
-//        if (this.tank1.getLives() == 0) {
-//            g2.drawImage(p2w, 0, 0, SPLITSCREEN_WIDTH, SPLITSCREEN_HEIGHT, null);
-//            gameover = true;
-//        }
-//        else if(endState){
-//
-//        }
 
-        //get a rectangle for repainting
-      //  r = g.getClipBounds();
+        //temp minimap to show layout
+        g2.drawImage(mini, SPLITSCREEN_WIDTH / 2 - SPLITSCREEN_WIDTH / 8 + 10, SPLITSCREEN_HEIGHT - 210, 200, 200, null);
+
     }
 }
