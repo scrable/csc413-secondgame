@@ -24,7 +24,6 @@ public class World extends JPanel {
     public static JLabel label;
     private Map m;
     private UserInput input1;
-    public static ImageIcon ico = null;
 
 
     //worlditems
@@ -32,6 +31,7 @@ public class World extends JPanel {
 //    private V_MovableWall vmw;
 //    private playerLife playerLife;
 //    private Potion potion;
+    private BorderWall borderWall;
     private Player player;
 
     public static ArrayList<WorldItem> worldItems = new ArrayList<>();
@@ -62,34 +62,30 @@ public class World extends JPanel {
         this.world = new BufferedImage(World.SCREEN_WIDTH, World.SCREEN_HEIGHT, BufferedImage.TYPE_INT_RGB);
 
         try {
-            //load the tank images
-//            player = new (700, SCREEN_HEIGHT / 2, 0, 0, 0, "tank1");
-//            player.setImg(ImageIO.read(getClass().getResource("/resources/Tank1.png")));
-//            worldItemsToSpawn.add(player);
-
-
             //load the background
             m = new Map();
             m.setImg(ImageIO.read(getClass().getResource("/resources/Background2.bmp")));
 
-            //load player image
+            //load a player
             player = new Player(100, 100);
-           // URL url = this.getClass().getResource("/resources/Explorer_up.gif");
+            worldItemsToSpawn.add(player);
 
-
-            //get down images array
+            //get player images array
             BufferedImage ExplorerFrame0 = ImageIO.read(getClass().getResource("/resources/e0.gif"));
             BufferedImage ExplorerFrame1 = ImageIO.read(getClass().getResource("/resources/e1.gif"));
             BufferedImage ExplorerFrame2 = ImageIO.read(getClass().getResource("/resources/e2.gif"));
             BufferedImage ExplorerFrame3 = ImageIO.read(getClass().getResource("/resources/e3.gif"));
             Player.ImageFrames(ExplorerFrame0, ExplorerFrame1, ExplorerFrame2, ExplorerFrame3);
 
-
+            //set the border wall image
+            borderWall = new BorderWall();
+            borderWall.setImg(ImageIO.read(getClass().getResource("/resources/Block.gif")));
+            worldItemsToSpawn.add(borderWall);
 
 //            player.setImg(ImageIO.read(getClass().getResource("/resources/Explorer_up.gif")));
 //            player.setImg(new ImageIcon(url).getImage());
 //            ico = new ImageIcon(url);
-            worldItemsToSpawn.add(player);
+
 
 //            //load the wall images
 //            hmw = new H_MovableWall();
