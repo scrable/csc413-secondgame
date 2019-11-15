@@ -29,7 +29,7 @@ public class BorderWall extends Wall {
         for (int i = 0; i < World.SCREEN_WIDTH; i += tempWidth) {
             BorderWall tempWallArea1 = new BorderWall();
             tempWallArea1.setX(i);
-            tempWallArea1.setY(World.SCREEN_HEIGHT - tempWidth);
+            tempWallArea1.setY(World.SCREEN_HEIGHT - tempWidth-8);
             tempWallArea1.setImg(img);
 
             BorderWall tempWallArea2 = new BorderWall();
@@ -42,7 +42,7 @@ public class BorderWall extends Wall {
         }
         for (int i = 0; i < World.SCREEN_HEIGHT; i += tempHeight) {
             BorderWall tempWallArea1 = new BorderWall();
-            tempWallArea1.setX(World.SCREEN_WIDTH - tempWidth);
+            tempWallArea1.setX(World.SCREEN_WIDTH - tempWidth-14);
             tempWallArea1.setY(i);
             tempWallArea1.setImg(img);
 
