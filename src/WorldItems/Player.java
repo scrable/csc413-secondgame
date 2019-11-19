@@ -1,11 +1,13 @@
-package src;
+package src.WorldItems;
+
+import src.World;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-public class Player extends WorldItem{
+public class Player extends WorldItem {
     private int px;
     private int py;
     private int moveSpeed = 10;
@@ -24,7 +26,7 @@ public class Player extends WorldItem{
     //starting HP
     private int health = 100;
 
-    Player(int x, int y) {
+    public Player(int x, int y) {
         this.setX(x);
         this.setY(y);
 
@@ -39,41 +41,41 @@ public class Player extends WorldItem{
         movementFrames[3] = ExplorerFrame3;
     }
 
-    void toggleUpPressed() {
+    public void toggleUpPressed() {
         this.UpPressed = true;
     }
 
-    void toggleDownPressed() { this.DownPressed = true; }
+    public void toggleDownPressed() { this.DownPressed = true; }
 
-    void toggleRightPressed() {
+    public void toggleRightPressed() {
         this.RightPressed = true;
     }
 
-    void toggleLeftPressed() {
+    public void toggleLeftPressed() {
         this.LeftPressed = true;
     }
 
-    void toggleShootPressed() { shootPressed = true; }
+    public void toggleShootPressed() { shootPressed = true; }
 
-    void unToggleUpPressed() {
+    public void unToggleUpPressed() {
         this.UpPressed = false;
     }
 
-    void unToggleDownPressed() {
+    public void unToggleDownPressed() {
         this.DownPressed = false;
     }
 
-    void unToggleRightPressed() {
+    public void unToggleRightPressed() {
         this.RightPressed = false;
     }
 
-    void unToggleLeftPressed() {
+    public void unToggleLeftPressed() {
         this.LeftPressed = false;
     }
 
-    void unToggleShootPressed() { this.shootPressed = false; }
+    public void unToggleShootPressed() { this.shootPressed = false; }
 
-    int getPx() {
+    public int getPx() {
         return px;
     }
 
@@ -81,7 +83,7 @@ public class Player extends WorldItem{
         this.px = px;
     }
 
-    int getPy() {
+    public int getPy() {
         return py;
     }
 
@@ -96,7 +98,7 @@ public class Player extends WorldItem{
     public int getHealth() {
         return health;
     }
-    boolean update() {
+    public boolean update() {
         boolean check = false;
         if (this.UpPressed) {
             this.moveUp();
@@ -115,6 +117,7 @@ public class Player extends WorldItem{
             this.moveRight();
             check = true;
         }
+        this.checkScreenEdge();
         return check;
     }
 
@@ -136,22 +139,6 @@ public class Player extends WorldItem{
     private void moveRight() {
         this.setX(getX() + moveSpeed);
         checkBorder();
-    }
-
-    private void checkBorder() {
-        if (this.getX() < 30) {
-            this.setX(30);
-        }
-        if (this.getX() >= World.SCREEN_WIDTH - 88) {
-            this.setX(World.SCREEN_WIDTH - 88);
-        }
-        if (this.getY() < 40) {
-            this.setY(40);
-        }
-        if (this.getY() >= World.SCREEN_HEIGHT - 80) {
-            this.setY(World.SCREEN_HEIGHT - 80);
-        }
-        checkScreenEdge();
     }
 
     private void checkScreenEdge() {
@@ -227,7 +214,7 @@ public class Player extends WorldItem{
         World.worldItems.add(this);
     }
 
-     void collisions() {
+     public void collisions() {
         ArrayList<WorldItem> worldItems = World.worldItems;
         for (int i = 0; i < worldItems.size(); i++) {
             WorldItem item = worldItems.get(i);
@@ -248,7 +235,7 @@ public class Player extends WorldItem{
                         } else {
                             if(item instanceof V_PushableWall){
                                 item.setY(item.getY() - 1);
-                                ((V_PushableWall) item).checkBorder();
+                                item.checkBorder();
                                 this.setY(item.getY() + item.getImg().getHeight(null));
                             }
                             else
@@ -265,7 +252,7 @@ public class Player extends WorldItem{
                         } else {
                             if(item instanceof V_PushableWall){
                                 item.setY(item.getY() + 1);
-                                ((V_PushableWall) item).checkBorder();
+                                item.checkBorder();
                                 this.setY(item.getY() - this.getImg().getHeight(null));
                             }
                             else

@@ -1,5 +1,7 @@
 package src;
 
+import src.WorldItems.Player;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 

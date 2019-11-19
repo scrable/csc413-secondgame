@@ -1,4 +1,6 @@
-package src;
+package src.WorldItems;
+
+import src.World;
 
 import javax.swing.*;
 import java.awt.*;
@@ -58,6 +60,22 @@ public abstract class WorldItem {
     public void setAy(int ay) {
         this.ay = ay;
     }
+
+    public void checkBorder() {
+        if (this.getX() < 30) {
+            this.setX(30);
+        }
+        if (this.getX() >= World.SCREEN_WIDTH - 88) {
+            this.setX(World.SCREEN_WIDTH - 88);
+        }
+        if (this.getY() < 40) {
+            this.setY(40);
+        }
+        if (this.getY() >= World.SCREEN_HEIGHT - 80) {
+            this.setY(World.SCREEN_HEIGHT - 80);
+        }
+    }
+
     
     public abstract void drawImage(Graphics g, int x, int y);
 

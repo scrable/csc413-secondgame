@@ -1,4 +1,4 @@
-package src;
+package src.WorldItems;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 public class H_PushableWall extends Wall {
     private static Image img;
 
-    void setImg(BufferedImage image) {
+    public void setImg(BufferedImage image) {
         img = image;
     }
 

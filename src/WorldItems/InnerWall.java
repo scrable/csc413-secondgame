@@ -1,14 +1,16 @@
-package src;
+package src.WorldItems;
+
+import src.World;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class InnerWall extends Wall{
+public class InnerWall extends Wall {
     private static Image img;
     private boolean isShown;
     Wall[][] walls = new InnerWall[66][66];
 
-    void setImg(BufferedImage image) {
+    public void setImg(BufferedImage image) {
         img = image;
     }
 

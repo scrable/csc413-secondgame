@@ -1,4 +1,6 @@
-package src;
+package src.WorldItems;
+
+import src.World;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -6,7 +8,7 @@ import java.awt.image.BufferedImage;
 public class BorderWall extends Wall {
     private static Image img;
 
-    void setImg(BufferedImage image) {
+    public void setImg(BufferedImage image) {
         img = image;
     }
 
