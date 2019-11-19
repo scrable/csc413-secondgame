@@ -12,4 +12,9 @@ public class Treasure_2 extends Treasure{
     public void spawn() {
 
     }
+
+    @Override
+    public void collisions() {
+
+    }
 }

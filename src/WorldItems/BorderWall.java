@@ -57,4 +57,9 @@ public class BorderWall extends Wall {
             World.worldItems.add(tempWallArea2);
         }
     }
+
+    @Override
+    public void collisions() {
+
+    }
 }

@@ -27,4 +27,9 @@ public class H_PushableWall extends Wall {
     public void spawn() {
 
     }
+
+    @Override
+    public void collisions() {
+
+    }
 }

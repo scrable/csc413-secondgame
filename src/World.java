@@ -36,6 +36,15 @@ public class World extends JPanel {
     private V_PushableWall vpw;
     private H_PushableWall hpw;
     private Player player;
+    private Beetle beetle;
+    private Mummy mummy;
+    private Potion potion;
+    private Scarab scarab;
+    private Scorpion scorpion;
+    private Sword sword;
+    private Treasure_1 treasure_1;
+    private Treasure_2 treasure_2;
+    private PlayerLife playerLife;
 
     public static ArrayList<WorldItem> worldItems = new ArrayList<>();
     private static ArrayList<WorldItem> worldItemsToSpawn = new ArrayList<>();
@@ -47,12 +56,13 @@ public class World extends JPanel {
             while (!gameover) {
                 {
                     if(w.player.update()){
-                        w.player.collisions();
+                        for(int i = 0; i < worldItems.size(); i++)
+                        {
+                         worldItems.get(i).collisions();
+                        }
+//                        w.player.collisions();
                         w.repaint();
-//                        w.player.getImg().flush();
                     }
-
-//                    w.repaint(r);
                 }
                 Thread.sleep(1000 / 144);
             }
@@ -86,49 +96,61 @@ public class World extends JPanel {
             borderWall.setImg(ImageIO.read(getClass().getResource("/resources/Block.gif")));
             worldItemsToSpawn.add(borderWall);
 
+            //set the inner wall image
             innerWall = new InnerWall();
             innerWall.setImg(ImageIO.read(getClass().getResource("/resources/Wall1.gif")));
             worldItemsToSpawn.add(innerWall);
 
+            //set the vertical pushable wall image
             vpw = new V_PushableWall(-100, -100);
             vpw.setImg(ImageIO.read(getClass().getResource("/resources/Block_vert.gif")));
             worldItemsToSpawn.add(vpw);
 
+            //set the horizontal wall image
             hpw = new H_PushableWall(- 100, -100);
             hpw.setImg(ImageIO.read(getClass().getResource("/resources/Block_hor.gif")));
             worldItemsToSpawn.add(hpw);
 
-
-//            player.setImg(ImageIO.read(getClass().getResource("/resources/Explorer_up.gif")));
-//            player.setImg(new ImageIcon(url).getImage());
-//            ico = new ImageIcon(url);
+            //set the beetle image
+            beetle = new Beetle();
 
 
-//            //load the wall images
-//            hmw = new H_MovableWall();
-//            hmw.setImg(ImageIO.read(getClass().getResource("/resources/Wall1.gif")));
-//            worldItemsToSpawn.add(hmw);
-//
-//            vmw = new BreakableWall();
-//            vmw.setImg(ImageIO.read(getClass().getResource("/resources/Wall2.gif")));
-//            worldItemsToSpawn.add(vmw);
-//
-//            //load lives icon
-//            playerLife = new playerLife();
-//            playerLife.setImg(ImageIO.read(getClass().getResource("/resources/Heart1.png")));
-//
-//            //load the image for the healing powerup icon
-//            potion = new Potion();
-//            potion.setImg(ImageIO.read(getClass().getResource("/resources/Heart2.png")));
-//            worldItemsToSpawn.add(potion);
-//
-//            //load each player winning image
-//            p1w = ImageIO.read(getClass().getResource("/resources/p1w.png"));
+            //set the mummy image
+            mummy = new Mummy();
 
-            int numWallsV = (SCREEN_HEIGHT - (borderWall.getImg().getHeight(null) * 2)) / borderWall.getImg().getHeight(null);
-            int numWallsH = (SCREEN_WIDTH - (borderWall.getImg().getWidth(null) * 2)) /  borderWall.getImg().getWidth(null);
-            System.out.println(numWallsV);
-            System.out.println(numWallsH);
+
+            //set the potion image
+            potion = new Potion();
+
+
+            //set the scarab image
+            scarab = new Scarab();
+
+
+            //set the scorpion image
+            scorpion = new Scorpion();
+
+
+            //set the sword image
+            sword = new Sword();
+
+
+            //set treasure_1 image
+            treasure_1 = new Treasure_1();
+
+
+            //set treasure_2 image
+            treasure_2 = new Treasure_2();
+
+
+            //set the player life image
+            playerLife = new PlayerLife();
+
+
+            //load the game over screen
+
+            //load the victory screen
+
 
             for (WorldItem worldItem : worldItemsToSpawn) {
                 worldItem.spawn();

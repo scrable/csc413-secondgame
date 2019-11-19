@@ -214,6 +214,7 @@ public class Player extends WorldItem {
         World.worldItems.add(this);
     }
 
+    @Override
      public void collisions() {
         ArrayList<WorldItem> worldItems = World.worldItems;
         for (int i = 0; i < worldItems.size(); i++) {

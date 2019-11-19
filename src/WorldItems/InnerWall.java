@@ -70,6 +70,11 @@ public class InnerWall extends Wall {
 
     }
 
+    @Override
+    public void collisions() {
+
+    }
+
     private void createWalls(){
         for(int i = 0; i < 14; i++){
             if(i == 3 || i == 4 || i == 9 || i == 10){
