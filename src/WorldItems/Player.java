@@ -262,14 +262,14 @@ public class Player extends WorldItem {
                     }
                     //from right into something
                     else if (this.getX() >= item.getX() + item.getImg().getWidth(null) - moveSpeed) {
-                        if(item instanceof V_PushableWall){
+                        if(item instanceof H_PushableWall){
                             item.setX(item.getX() - 1);
                         }
                         this.setX((int) intersection.getX() + (int) intersection.getWidth());
                     }
                     //from left into something
                     else if (this.getX() + this.getImg().getWidth(null) <= item.getX() + moveSpeed) {
-                        if(item instanceof V_PushableWall){
+                        if(item instanceof H_PushableWall){
                             item.setX(item.getX() + 1);
                         }
                         this.setX((int) intersection.getX() - this.getImg().getWidth(null));
