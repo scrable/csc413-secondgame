@@ -20,11 +20,8 @@ public class V_PushableWall extends Wall {
         this.setY(y);
     }
 
-
-
     @Override
     public void drawImage(Graphics g, int x, int y) {
-
         g.drawImage(getImg(), x, y, null);
     }
 

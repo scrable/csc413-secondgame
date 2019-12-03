@@ -20,6 +20,7 @@ public class World extends JPanel {
     private static Rectangle r;
     private static boolean gameover = false;
     private BufferedImage world;
+    private BufferedImage bottomPanel;
     private BufferedImage p1w;
     private Graphics2D buffer;
     private JFrame jf;
@@ -37,6 +38,7 @@ public class World extends JPanel {
     private V_PushableWall vpw;
     private H_PushableWall hpw;
     private Player player;
+    private Ladder ladder;
     private Beetle beetle;
     private Mummy mummy;
     private Potion potion;
@@ -82,7 +84,7 @@ public class World extends JPanel {
             m.setImg(ImageIO.read(getClass().getResource("/resources/Background2.bmp")));
 
             //load a player
-            player = new Player(100, 100);
+            player = new Player(1790, 240);
             worldItemsToSpawn.add(player);
 
             //get player images array
@@ -147,6 +149,14 @@ public class World extends JPanel {
             //set the player life image
             playerLife = new PlayerLife();
 
+            //set the ladder image
+            ladder = new Ladder();
+            ladder.setImg(ImageIO.read(getClass().getResource("/resources/ladder.png")));
+            worldItemsToSpawn.add(ladder);
+
+            //load the bottom panel
+            bottomPanel = ImageIO.read(getClass().getResource("/resources/Panel.gif"));
+
 
             //load the game over screen
 
@@ -208,9 +218,15 @@ public class World extends JPanel {
 
         g2.drawImage(small, 0, 0, null);
 
+        g2.drawImage(bottomPanel, SPLITSCREEN_WIDTH/2 - bottomPanel.getWidth()/2, SPLITSCREEN_HEIGHT-bottomPanel.getHeight() - 4, null);
+
 
         //temp minimap to show layout
 //        g2.drawImage(mini, SPLITSCREEN_WIDTH / 2 - SPLITSCREEN_WIDTH / 8 + 10, SPLITSCREEN_HEIGHT - 210, 200, 200, null);
 
+    }
+
+    public static void setGameover(boolean gameover) {
+        World.gameover = gameover;
     }
 }

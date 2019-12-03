@@ -17,6 +17,8 @@ public class Player extends WorldItem {
     private boolean LeftPressed;
     private boolean shootPressed;
 
+    private boolean hasSword = false;
+
     private static BufferedImage[] movementFrames = new BufferedImage[4];
 
     private int imageIndex = 0;
@@ -279,6 +281,14 @@ public class Player extends WorldItem {
                         }
                         this.setX((int) intersection.getX() - this.getImg().getWidth(null));
                     }
+                }
+            }
+            else if(item instanceof Ladder){
+                Rectangle thisRectangle = new Rectangle(this.getX() + this.getAx(), this.getY() + this.getAy(), this.getImg().getWidth(null), this.getImg().getHeight(null));
+                Rectangle itemRectangle = new Rectangle(item.getX(), item.getY(), item.getImg().getWidth(null), item.getImg().getHeight(null));
+                if (thisRectangle.intersects(itemRectangle)) {
+                    if(this.hasSword)
+                        World.setGameover(true);
                 }
             }
         }
