@@ -41,7 +41,6 @@ public class H_PushableWall extends Wall {
                     Rectangle intersection = thisRectangle.intersection(itemRectangle);
                     //from right into something - the -2 is so we have some sort of intersection width
                     if (this.getX() > item.getX() + item.getImg().getWidth(null) - 2) {
-                        System.out.println("sean");
                         this.setX((int) intersection.getX() + (int) intersection.getWidth());
                     }
                     //from left into something
