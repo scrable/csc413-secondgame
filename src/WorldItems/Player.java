@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class Player extends WorldItem {
     private int px;
     private int py;
-    private int moveSpeed = 10;
+    private int moveSpeed = 5;
     private boolean UpPressed;
     private boolean DownPressed;
     private boolean RightPressed;
@@ -231,7 +231,7 @@ public class Player extends WorldItem {
                         if (this.getX() + this.getImg().getWidth(null) <= item.getX() + moveSpeed) {
                             this.setX((int) intersection.getX() - this.getImg().getWidth(null));
                         } else if (this.getX() >= item.getX() + item.getImg().getWidth(null) - moveSpeed) {
-                            this.setX((int) intersection.getX() + (int) intersection.getWidth());
+                            this.setX((int) intersection.getX());// + (int) intersection.getWidth());
 
                         } else {
                             if(item instanceof V_PushableWall){
@@ -246,7 +246,7 @@ public class Player extends WorldItem {
                     //from top into something
                     else if (this.getY() <= item.getY() - this.getImg().getHeight(null) + moveSpeed) {
                         if (this.getX() >= item.getX() + item.getImg().getWidth(null) - moveSpeed) {
-                            this.setX((int) intersection.getX() + (int) intersection.getWidth());
+                            this.setX((int) intersection.getX());// + (int) intersection.getWidth());
 
                         } else if (this.getX() + this.getImg().getWidth(null) <= item.getX() + moveSpeed) {
                             this.setX((int) intersection.getX() - this.getImg().getWidth(null));
@@ -265,6 +265,8 @@ public class Player extends WorldItem {
                     else if (this.getX() >= item.getX() + item.getImg().getWidth(null) - moveSpeed) {
                         if(item instanceof H_PushableWall){
                             item.setX(item.getX() - 1);
+                            item.checkBorder();
+                            this.setX(item.getX() + item.getImg().getWidth(null));
                         }
                         this.setX((int) intersection.getX() + (int) intersection.getWidth());
                     }
@@ -272,6 +274,8 @@ public class Player extends WorldItem {
                     else if (this.getX() + this.getImg().getWidth(null) <= item.getX() + moveSpeed) {
                         if(item instanceof H_PushableWall){
                             item.setX(item.getX() + 1);
+                            item.checkBorder();
+                            this.setX(item.getX() - this.getImg().getWidth(null));
                         }
                         this.setX((int) intersection.getX() - this.getImg().getWidth(null));
                     }
