@@ -9,7 +9,7 @@ public class InnerWall extends Wall {
     private static Image img;
 
     //set by calculating number of walls that will fit in the middle
-    Wall[][] walls = new InnerWall[66][66];
+    private Wall[][] walls = new InnerWall[68][68];
 
     public void setImg(BufferedImage image) {
         img = image;
@@ -107,6 +107,74 @@ public class InnerWall extends Wall {
             else{
                 World.worldItems.add(walls[18][i]);
             }
+        }
+
+        for(int i = 13; i < 19; i++){
+            World.worldItems.add(walls[i][50]);
+        }
+
+        for(int i = 65; i >= 50; i--){
+            World.worldItems.add(walls[45][i]);
+        }
+
+        for(int i = 46; i < 62; i++){
+            if(i == 47 || i == 48)
+            {
+                V_PushableWall tempVPW;
+                tempVPW = new V_PushableWall(walls[i][50].getX(), walls[i][50].getY());
+                World.worldItems.add(tempVPW);
+            }
+            else
+                World.worldItems.add(walls[i][50]);
+        }
+
+        for(int i = 40; i > 20; i--){
+            World.worldItems.add(walls[45][i]);
+        }
+
+        for(int i = 46; i < 66; i++){
+            World.worldItems.add(walls[i][40]);
+
+            if(i == 49 || i == 50 || i == 61 || i == 62)
+            {
+                V_PushableWall tempVPW;
+                tempVPW = new V_PushableWall(walls[i][21].getX(), walls[i][21].getY());
+                World.worldItems.add(tempVPW);
+            }
+            else
+                World.worldItems.add(walls[i][21]);
+        }
+
+        for(int i = 65; i > 50; i--){
+            World.worldItems.add(walls[i][54]);
+        }
+
+        for(int i = 55; i < 62; i++){
+            World.worldItems.add(walls[51][i]);
+        }
+
+        for(int i = 52; i < 58; i++){
+            if(i == 53 || i == 54 || i == 55)
+            {
+                V_PushableWall tempVPW;
+                tempVPW = new V_PushableWall(walls[i][61].getX(), walls[i][61].getY());
+                World.worldItems.add(tempVPW);
+            }
+            else
+                World.worldItems.add(walls[i][61]);
+        }
+
+        for(int i = 55; i < 64; i++){
+            World.worldItems.add(walls[57][i]);
+        }
+        for(int i = 55; i < 66; i++){
+            if(i == 56 || i == 57 || i == 63 || i == 64){
+                H_PushableWall tempHPW;
+                tempHPW = new H_PushableWall(walls[61][i].getX(), walls[61][i].getY());
+                World.worldItems.add(tempHPW);
+            }
+            else
+                World.worldItems.add(walls[61][i]);
         }
     }
 }

@@ -12,8 +12,9 @@ import java.util.ArrayList;
 
 public class World extends JPanel {
 
-    public static final int SCREEN_WIDTH = 2200;
-    public static final int SCREEN_HEIGHT = 2200;
+    //multiples of 32, which is wall size
+    public static final int SCREEN_WIDTH = 2176;
+    public static final int SCREEN_HEIGHT = 2176;
     public static final int SPLITSCREEN_WIDTH = 900;
     public static final int SPLITSCREEN_HEIGHT = 700;
     private static Rectangle r;
