@@ -237,9 +237,9 @@ public class Player extends WorldItem {
                             if(item instanceof V_PushableWall){
                                 item.setY(item.getY() - 1);
                                 item.checkBorder();
-                                this.setY(item.getY() + item.getImg().getHeight(null));
+                             //   this.setY(item.getY() + item.getImg().getHeight(null));
                             }
-                            else
+                           // else
                             this.setY((int) intersection.getY() + (int) intersection.getHeight());
                         }
                     }
@@ -254,9 +254,9 @@ public class Player extends WorldItem {
                             if(item instanceof V_PushableWall){
                                 item.setY(item.getY() + 1);
                                 item.checkBorder();
-                                this.setY(item.getY() - this.getImg().getHeight(null));
+                             //   this.setY(item.getY() - this.getImg().getHeight(null));
                             }
-                            else
+                           // else
                             this.setY((int) intersection.getY() - this.getImg().getHeight(null));
 
                         }
