@@ -287,8 +287,8 @@ public class Player extends WorldItem {
                 Rectangle thisRectangle = new Rectangle(this.getX() + this.getAx(), this.getY() + this.getAy(), this.getImg().getWidth(null), this.getImg().getHeight(null));
                 Rectangle itemRectangle = new Rectangle(item.getX(), item.getY(), item.getImg().getWidth(null), item.getImg().getHeight(null));
                 if (thisRectangle.intersects(itemRectangle)) {
-                    if(this.hasSword)
-                        World.setGameover(true);
+                   // if(this.hasSword)
+                        World.setGameoverVictory(true);
                 }
             }
         }

@@ -19,9 +19,11 @@ public class World extends JPanel {
     public static final int SPLITSCREEN_HEIGHT = 700;
     private static Rectangle r;
     private static boolean gameover = false;
+    private static boolean victory = false;
     private BufferedImage world;
     private BufferedImage bottomPanel;
-    private BufferedImage p1w;
+    private BufferedImage victoryScreen;
+    private BufferedImage gameOverScreen;
     private Graphics2D buffer;
     private JFrame jf;
     public static JLabel label;
@@ -59,11 +61,11 @@ public class World extends JPanel {
             while (!gameover) {
                 {
                     if(w.player.update()){
+                        System.out.println("X: " + w.player.getX() + " Y: " + w.player.getY());
                         for(int i = 0; i < worldItems.size(); i++)
                         {
                          worldItems.get(i).collisions();
                         }
-//                        w.player.collisions();
                         w.repaint();
                     }
                 }
@@ -136,6 +138,7 @@ public class World extends JPanel {
 
             //set the sword image
             sword = new Sword();
+            //2060 1820
 
 
             //set treasure_1 image
@@ -144,7 +147,6 @@ public class World extends JPanel {
 
             //set treasure_2 image
             treasure_2 = new Treasure_2();
-
 
             //set the player life image
             playerLife = new PlayerLife();
@@ -157,10 +159,11 @@ public class World extends JPanel {
             //load the bottom panel
             bottomPanel = ImageIO.read(getClass().getResource("/resources/Panel.gif"));
 
-
             //load the game over screen
+            gameOverScreen = ImageIO.read(getClass().getResource("/resources/Background1.bmp"));
 
             //load the victory screen
+            victoryScreen = ImageIO.read(getClass().getResource("/resources/Congratulation.gif"));
 
 
             for (WorldItem worldItem : worldItemsToSpawn) {
@@ -178,9 +181,6 @@ public class World extends JPanel {
 
         //add the world to the jframe
         this.jf.add(this);
-
-
-
 
         //ensure preferred sizes
         this.jf.pack();
@@ -208,7 +208,6 @@ public class World extends JPanel {
         this.m.drawImage(buffer);
 
         BufferedImage small = world.getSubimage(player.getPx() - SPLITSCREEN_WIDTH/2, player.getPy() - SPLITSCREEN_HEIGHT/2, SPLITSCREEN_WIDTH, SPLITSCREEN_HEIGHT);
-//        BufferedImage mini = world.getSubimage(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
         //draw each instance of WorldItem
         for (int i = 0; i < worldItems.size(); i++) {
@@ -220,13 +219,13 @@ public class World extends JPanel {
 
         g2.drawImage(bottomPanel, SPLITSCREEN_WIDTH/2 - bottomPanel.getWidth()/2, SPLITSCREEN_HEIGHT-bottomPanel.getHeight() - 4, null);
 
-
-        //temp minimap to show layout
-//        g2.drawImage(mini, SPLITSCREEN_WIDTH / 2 - SPLITSCREEN_WIDTH / 8 + 10, SPLITSCREEN_HEIGHT - 210, 200, 200, null);
-
+        if(victory){
+            g2.drawImage(victoryScreen, 0, 0, SPLITSCREEN_WIDTH, SPLITSCREEN_HEIGHT, null);
+            gameover = true;
+        }
     }
 
-    public static void setGameover(boolean gameover) {
-        World.gameover = gameover;
+    public static void setGameoverVictory(boolean victory) {
+        World.victory = victory;
     }
 }

@@ -1,3 +1,10 @@
+/*
+    Ladder is created as a class so we can use instanceof to check for collisions
+    and load the victory screen
+*/
+
+
+
 package src.WorldItems;
 
 import src.World;
