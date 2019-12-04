@@ -1,4 +1,20 @@
 package src.WorldItems;
 
-public class Scarab {
+import java.awt.*;
+
+public class Scarab extends WorldItem {
+    @Override
+    public void drawImage(Graphics g, int x, int y) {
+
+    }
+
+    @Override
+    public void spawn() {
+
+    }
+
+    @Override
+    public void collisions() {
+
+    }
 }
