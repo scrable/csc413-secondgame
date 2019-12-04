@@ -65,8 +65,8 @@ public abstract class WorldItem {
         if (this.getX() < 30) {
             this.setX(30);
         }
-        if (this.getX() >= World.SCREEN_WIDTH - 88) {
-            this.setX(World.SCREEN_WIDTH - 88);
+        if (this.getX() >= World.SCREEN_WIDTH - 66) {
+            this.setX(World.SCREEN_WIDTH - 66);
         }
         if (this.getY() < 32) {
             this.setY(32);
