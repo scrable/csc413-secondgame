@@ -150,6 +150,7 @@ public class World extends JPanel {
 
             //set the player life image
             playerLife = new PlayerLife();
+            playerLife.setImg(ImageIO.read(getClass().getResource("/resources/Lives.gif")));
 
             //set the ladder image
             ladder = new Ladder();
@@ -217,7 +218,11 @@ public class World extends JPanel {
 
         g2.drawImage(small, 0, 0, null);
 
-        g2.drawImage(bottomPanel, SPLITSCREEN_WIDTH/2 - bottomPanel.getWidth()/2, SPLITSCREEN_HEIGHT-bottomPanel.getHeight() - 4, null);
+        g2.drawImage(bottomPanel, SPLITSCREEN_WIDTH/2 - bottomPanel.getWidth()/2, SPLITSCREEN_HEIGHT-bottomPanel.getHeight() - 8, null);
+
+        //draw player's lives count
+        for(int i = 0; i < player.getHealth(); i++)
+            g2.drawImage(playerLife.getImg(), 210 + 34*i, SPLITSCREEN_HEIGHT - playerLife.getImg().getHeight(null) - 10, null);
 
         if(victory){
             g2.drawImage(victoryScreen, 0, 0, SPLITSCREEN_WIDTH, SPLITSCREEN_HEIGHT, null);
