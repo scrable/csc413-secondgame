@@ -26,7 +26,7 @@ public class Player extends WorldItem {
     private double lastPressed = 0;
 
     //starting HP
-    private int health = 100;
+    private int health = 3;
 
     public Player(int x, int y) {
         this.setX(x);
@@ -34,6 +34,14 @@ public class Player extends WorldItem {
 
         //check border here to make sure the initial position is valid
         checkBorder();
+    }
+
+    public void setHasSword(boolean hasSword){
+        this.hasSword = hasSword;
+    }
+
+    public boolean getHasSword(){
+        return hasSword;
     }
 
     public static void ImageFrames(BufferedImage ExplorerFrame0, BufferedImage ExplorerFrame1, BufferedImage ExplorerFrame2, BufferedImage ExplorerFrame3) {
@@ -218,9 +226,9 @@ public class Player extends WorldItem {
 
     @Override
      public void collisions() {
-        ArrayList<WorldItem> worldItems = World.worldItems;
-        for (int i = 0; i < worldItems.size(); i++) {
-            WorldItem item = worldItems.get(i);
+
+        for (int i = 0; i < World.worldItems.size(); i++) {
+            WorldItem item = World.worldItems.get(i);
 
             if (item instanceof Wall) {
                 Rectangle thisRectangle = new Rectangle(this.getX() + this.getAx(), this.getY() + this.getAy(), this.getImg().getWidth(null), this.getImg().getHeight(null));
@@ -281,22 +289,6 @@ public class Player extends WorldItem {
                         }
                         this.setX((int) intersection.getX() - this.getImg().getWidth(null));
                     }
-                }
-            }
-            else if(item instanceof Ladder){
-                Rectangle thisRectangle = new Rectangle(this.getX() + this.getAx(), this.getY() + this.getAy(), this.getImg().getWidth(null), this.getImg().getHeight(null));
-                Rectangle itemRectangle = new Rectangle(item.getX(), item.getY(), item.getImg().getWidth(null), item.getImg().getHeight(null));
-                if (thisRectangle.intersects(itemRectangle)) {
-                    if(this.hasSword)
-                        World.setGameoverVictory(true);
-                }
-            }
-            else if(item instanceof Sword){
-                Rectangle thisRectangle = new Rectangle(this.getX() + this.getAx(), this.getY() + this.getAy(), this.getImg().getWidth(null), this.getImg().getHeight(null));
-                Rectangle itemRectangle = new Rectangle(item.getX(), item.getY(), item.getImg().getWidth(null), item.getImg().getHeight(null));
-                if(thisRectangle.intersects(itemRectangle)){
-                    this.hasSword = true;
-                    World.worldItems.remove(item);
                 }
             }
         }
