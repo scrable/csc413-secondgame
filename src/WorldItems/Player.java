@@ -5,7 +5,6 @@ import src.World;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 
 public class Player extends WorldItem {
     private int px;
@@ -113,27 +112,31 @@ public class Player extends WorldItem {
     public int getHealth() {
         return health;
     }
-    public boolean update() {
-        boolean check = false;
+    public void update() {
+//        boolean check = false;
         if (this.UpPressed) {
             this.moveUp();
-            check = true;
+//            check = true;
         }
         if (this.DownPressed) {
             this.moveDown();
-            check = true;
+//            check = true;
         }
-
         if (this.LeftPressed) {
             this.moveLeft();
-            check = true;
+//            check = true;
         }
         if (this.RightPressed) {
             this.moveRight();
-            check = true;
+//            check = true;
         }
+        if(this.shootPressed){
+            this.activateSword();
+//            check = true;
+        }
+        else this.deactivateSword();
+
         this.checkScreenEdge();
-        return check;
     }
 
     private void moveDown() {
@@ -154,6 +157,14 @@ public class Player extends WorldItem {
     private void moveRight() {
         this.setX(getX() + moveSpeed);
         checkBorder();
+    }
+
+    private void activateSword(){
+        this.swordActive = true;
+    }
+
+    private void deactivateSword(){
+        this.swordActive = false;
     }
 
     private void checkScreenEdge() {
@@ -180,18 +191,20 @@ public class Player extends WorldItem {
 
     @Override
     public void drawImage(Graphics g, int x, int y) {
-        //choose the correct frame
-        if (imageIndex <= 3) {
-            this.setImg(movementFrames[imageIndex]);
-        } else {
-            this.setImg(movementFrames[0]);
-            imageIndex = 0;
-        }
+        if(this.LeftPressed || this.RightPressed || this.DownPressed || this.UpPressed) {
+            //choose the correct frame
+            if (imageIndex <= 3) {
+                this.setImg(movementFrames[imageIndex]);
+            } else {
+                this.setImg(movementFrames[0]);
+                imageIndex = 0;
+            }
 
-        //reset the time
-        if(System.currentTimeMillis() - imageChanged > 150) {
-            imageIndex++;
-            imageChanged = System.currentTimeMillis();
+            //reset the time
+            if (System.currentTimeMillis() - imageChanged > 150) {
+                imageIndex++;
+                imageChanged = System.currentTimeMillis();
+            }
         }
 
         //rotate the frames depending on what has been pressed
@@ -226,6 +239,7 @@ public class Player extends WorldItem {
 
     @Override
     public void spawn() {
+        this.setImg(movementFrames[0]);
         World.worldItems.add(this);
     }
 

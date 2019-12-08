@@ -33,8 +33,6 @@ public class World extends JPanel {
 
 
     //worlditems
-//    private playerLife playerLife;
-//    private Potion potion;
     private BorderWall borderWall;
     private InnerWall innerWall;
     private V_PushableWall vpw;
@@ -60,15 +58,14 @@ public class World extends JPanel {
         try {
             while (!gameover) {
                 {
-                    if(w.player.update()){
+                    w.player.update();
                         System.out.println("X: " + w.player.getX() + " Y: " + w.player.getY());
                         for(int i = 0; i < worldItems.size(); i++)
                         {
-                         worldItems.get(i).collisions();
+                            worldItems.get(i).collisions();
                         }
                         w.repaint();
                     }
-                }
                 Thread.sleep(1000 / 144);
             }
         } catch (InterruptedException ignored) {
@@ -176,7 +173,7 @@ public class World extends JPanel {
         }
 
         //spawn instances of keylisteners
-        input1 = new UserInput(player, KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_ENTER);
+        input1 = new UserInput(player, KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_SPACE);
 
         this.jf.setLayout(new BorderLayout());
 
