@@ -18,6 +18,7 @@ public class Player extends WorldItem {
     private boolean shootPressed;
 
     private boolean hasSword = false;
+    private boolean swordActive = false;
 
     private static BufferedImage[] movementFrames = new BufferedImage[4];
 
@@ -42,6 +43,10 @@ public class Player extends WorldItem {
 
     public boolean getHasSword(){
         return hasSword;
+    }
+
+    public boolean getSwordActive(){
+        return swordActive;
     }
 
     public static void ImageFrames(BufferedImage ExplorerFrame0, BufferedImage ExplorerFrame1, BufferedImage ExplorerFrame2, BufferedImage ExplorerFrame3) {

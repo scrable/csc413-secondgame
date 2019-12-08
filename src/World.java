@@ -208,15 +208,68 @@ public class World extends JPanel {
         //draw the background
         this.m.drawImage(buffer);
 
-        BufferedImage small = world.getSubimage(player.getPx() - SPLITSCREEN_WIDTH/2, player.getPy() - SPLITSCREEN_HEIGHT/2, SPLITSCREEN_WIDTH, SPLITSCREEN_HEIGHT);
-
         //draw each instance of WorldItem
         for (int i = 0; i < worldItems.size(); i++) {
             WorldItem worldItem = worldItems.get(i);
             worldItem.drawImage(buffer, worldItem.getX(), worldItem.getY());
         }
 
-        g2.drawImage(small, 0, 0, null);
+        int x1 = player.getX() - SPLITSCREEN_WIDTH * 20 / 40;
+        if ((player.getX() - SPLITSCREEN_WIDTH * 20 / 40) < 0) {
+            x1 = 0;
+        } else if ((player.getX() + SPLITSCREEN_WIDTH * 20 / 40) > (SCREEN_WIDTH)) {
+            x1 = SCREEN_WIDTH - SPLITSCREEN_WIDTH * 20 / 20;
+        }
+
+        int y1 = player.getY() - SPLITSCREEN_HEIGHT / 2;
+        if ((player.getY() - SPLITSCREEN_HEIGHT / 2) < 0) {
+            y1 = 0;
+        } else if ((player.getY() + SPLITSCREEN_HEIGHT / 2) > (SCREEN_HEIGHT)) {
+            y1 = SCREEN_HEIGHT - SPLITSCREEN_HEIGHT;
+        }
+
+        BufferedImage surroundingPlayer = world.getSubimage(x1, y1, SPLITSCREEN_WIDTH, SPLITSCREEN_HEIGHT);
+
+        if(player.getHasSword() && !player.getSwordActive()){
+            int Y_Maximum;
+            int Y_Minimum;
+            int X_Maximum;
+            int X_Minimum;
+
+            if ((player.getX() - SPLITSCREEN_WIDTH / 2) < 0) {
+                X_Maximum = Integer.max(SPLITSCREEN_WIDTH / 2 - (SPLITSCREEN_WIDTH / 2 - player.getX()) + SPLITSCREEN_WIDTH / 4, SPLITSCREEN_WIDTH / 4);
+                X_Minimum = Integer.max(X_Maximum - SPLITSCREEN_WIDTH / 2, 0);
+            } else if ((player.getX() + SPLITSCREEN_WIDTH / 2) > SCREEN_WIDTH) {
+
+                X_Maximum = Integer.min(SPLITSCREEN_WIDTH - (SCREEN_WIDTH - player.getX()) + SPLITSCREEN_WIDTH / 4, SPLITSCREEN_WIDTH);
+                X_Minimum = X_Maximum - SPLITSCREEN_WIDTH / 2;
+
+            } else {
+                X_Minimum = SPLITSCREEN_WIDTH / 4;
+                X_Maximum = SPLITSCREEN_WIDTH * 3 / 4;
+            }
+
+            if ((player.getY() - SPLITSCREEN_HEIGHT / 2) < 0) {
+                Y_Maximum = Integer.max(SPLITSCREEN_HEIGHT / 2 - (SPLITSCREEN_HEIGHT / 2 - player.getY()) + SPLITSCREEN_HEIGHT / 4, SPLITSCREEN_HEIGHT / 4);
+                Y_Minimum = Integer.max(Y_Maximum - SPLITSCREEN_HEIGHT / 2, 0);
+            } else if ((player.getY() + SPLITSCREEN_HEIGHT / 2) > SCREEN_HEIGHT) {
+                Y_Maximum = Integer.min(SPLITSCREEN_HEIGHT - (SCREEN_HEIGHT - player.getY()) + SPLITSCREEN_HEIGHT / 4, SPLITSCREEN_HEIGHT);
+                Y_Minimum = Y_Maximum - SPLITSCREEN_HEIGHT / 2;
+            } else {
+                Y_Minimum = SPLITSCREEN_HEIGHT / 4;
+                Y_Maximum = SPLITSCREEN_HEIGHT * 3 / 4;
+            }
+
+            for (int i = 0; i < SPLITSCREEN_WIDTH; i++) {
+                for (int j = 0; j < SPLITSCREEN_HEIGHT; j++) {
+                    if (i < X_Minimum || i > X_Maximum || j < Y_Minimum || j > Y_Maximum) {
+                        surroundingPlayer.setRGB(i, j, 0);
+                    }
+                }
+            }
+        }
+
+        g2.drawImage(surroundingPlayer, 0, 0, null);
 
         g2.drawImage(bottomPanel, SPLITSCREEN_WIDTH/2 - bottomPanel.getWidth()/2, SPLITSCREEN_HEIGHT-bottomPanel.getHeight() - 8, null);
 
