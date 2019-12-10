@@ -143,7 +143,9 @@ public class World extends JPanel {
 
 
             //set treasure_2 image
-            treasure_2 = new Treasure_2();
+            treasure_2 = new Treasure_2(-100, -100);
+            treasure_2.setImg(ImageIO.read(getClass().getResource("/resources/Treasure2.gif")));
+            worldItemsToSpawn.add(treasure_2);
 
             //set the player life image
             playerLife = new PlayerLife();

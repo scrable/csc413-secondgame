@@ -2,7 +2,6 @@ package src.WorldItems;
 
 import src.World;
 
-import javax.swing.*;
 import java.awt.*;
 
 public abstract class WorldItem {
