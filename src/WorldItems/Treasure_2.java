@@ -11,7 +11,6 @@ public class Treasure_2 extends Treasure{
     public void setImg(BufferedImage image) {
         img = image;
     }
-
     public Image getImg() {
         return img;
     }
@@ -56,20 +55,5 @@ public class Treasure_2 extends Treasure{
         World.worldItems.add(temp_t2);
         temp_t2 = new Treasure_2(1922, 1818);
         World.worldItems.add(temp_t2);
-    }
-
-    @Override
-    public void collisions() {
-        for (int i = 0; i < World.worldItems.size(); i++) {
-            WorldItem item = World.worldItems.get(i);
-            if (item instanceof Player) {
-                Rectangle thisRectangle = new Rectangle(this.getX() + this.getAx(), this.getY() + this.getAy(), this.getImg().getWidth(null), this.getImg().getHeight(null));
-                Rectangle itemRectangle = new Rectangle(item.getX(), item.getY(), item.getImg().getWidth(null), item.getImg().getHeight(null));
-                if (thisRectangle.intersects(itemRectangle)) {
-                    ((Player) item).addScore(50);
-                    World.worldItems.remove(this);
-                }
-            }
-        }
     }
 }
