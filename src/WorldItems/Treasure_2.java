@@ -28,29 +28,48 @@ public class Treasure_2 extends Treasure{
 
     @Override
     public void spawn() {
-        /*
-        2060, 70
-        2094, 612
-        1830, 1000
-        90, 100
-        290, 430
-        290, 660
-        70, 1085
-        42, 2057
-        42, 2104
-        531, 1686
-        531, 1964
-        1060, 1500
-        1770, 1818
-        1922, 1818
-         */
         Treasure_2 temp_t2 = new Treasure_2(2060, 70);
         World.worldItems.add(temp_t2);
-
+        temp_t2 = new Treasure_2(2094, 612);
+        World.worldItems.add(temp_t2);
+        temp_t2 = new Treasure_2(1830, 1000);
+        World.worldItems.add(temp_t2);
+        temp_t2 = new Treasure_2(90, 100);
+        World.worldItems.add(temp_t2);
+        temp_t2 = new Treasure_2(290, 430);
+        World.worldItems.add(temp_t2);
+        temp_t2 = new Treasure_2(290, 660);
+        World.worldItems.add(temp_t2);
+        temp_t2 = new Treasure_2(70, 1085);
+        World.worldItems.add(temp_t2);
+        temp_t2 = new Treasure_2(42, 2057);
+        World.worldItems.add(temp_t2);
+        temp_t2 = new Treasure_2(42, 2104);
+        World.worldItems.add(temp_t2);
+        temp_t2 = new Treasure_2(531, 1686);
+        World.worldItems.add(temp_t2);
+        temp_t2 = new Treasure_2(531, 1964);
+        World.worldItems.add(temp_t2);
+        temp_t2 = new Treasure_2(1060, 1500);
+        World.worldItems.add(temp_t2);
+        temp_t2 = new Treasure_2(1770, 1818);
+        World.worldItems.add(temp_t2);
+        temp_t2 = new Treasure_2(1922, 1818);
+        World.worldItems.add(temp_t2);
     }
 
     @Override
     public void collisions() {
-
+        for (int i = 0; i < World.worldItems.size(); i++) {
+            WorldItem item = World.worldItems.get(i);
+            if (item instanceof Player) {
+                Rectangle thisRectangle = new Rectangle(this.getX() + this.getAx(), this.getY() + this.getAy(), this.getImg().getWidth(null), this.getImg().getHeight(null));
+                Rectangle itemRectangle = new Rectangle(item.getX(), item.getY(), item.getImg().getWidth(null), item.getImg().getHeight(null));
+                if (thisRectangle.intersects(itemRectangle)) {
+                    ((Player) item).addScore(50);
+                    World.worldItems.remove(this);
+                }
+            }
+        }
     }
 }
