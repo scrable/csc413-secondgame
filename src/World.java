@@ -140,7 +140,8 @@ public class World extends JPanel {
 
             //set treasure_1 image
             treasure_1 = new Treasure_1();
-
+            treasure_1.setImg(ImageIO.read(getClass().getResource("/resources/Treasure1.gif")));
+            worldItemsToSpawn.add(treasure_1);
 
             //set treasure_2 image
             treasure_2 = new Treasure_2(-100, -100);
@@ -271,6 +272,11 @@ public class World extends JPanel {
         g2.drawImage(surroundingPlayer, 0, 0, null);
 
         g2.drawImage(bottomPanel, SPLITSCREEN_WIDTH/2 - bottomPanel.getWidth()/2, SPLITSCREEN_HEIGHT-bottomPanel.getHeight() - 8, null);
+
+        //draw the player score
+        g2.setFont(new Font("Calibri", Font.BOLD, 20));
+        g2.setColor(Color.black);
+        g2.drawString(Integer.toString(player.getScore()), 690, SPLITSCREEN_HEIGHT - 18);
 
         //draw player's lives count
         for(int i = 0; i < player.getHealth(); i++)

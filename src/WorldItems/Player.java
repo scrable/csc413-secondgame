@@ -28,6 +28,8 @@ public class Player extends WorldItem {
     //starting HP
     private int health = 3;
 
+    private int score = 0;
+
     public Player(int x, int y) {
         this.setX(x);
         this.setY(y);
@@ -112,27 +114,30 @@ public class Player extends WorldItem {
     public int getHealth() {
         return health;
     }
+
+    public void addScore(int scoreToAdd){
+        score += scoreToAdd;
+    }
+
+    public int getScore(){
+        return score;
+    }
+
     public void update() {
-//        boolean check = false;
         if (this.UpPressed) {
             this.moveUp();
-//            check = true;
         }
         if (this.DownPressed) {
             this.moveDown();
-//            check = true;
         }
         if (this.LeftPressed) {
             this.moveLeft();
-//            check = true;
         }
         if (this.RightPressed) {
             this.moveRight();
-//            check = true;
         }
         if(this.shootPressed){
             this.activateSword();
-//            check = true;
         }
         else this.deactivateSword();
 
