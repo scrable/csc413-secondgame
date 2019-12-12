@@ -53,6 +53,7 @@ public class World extends JPanel {
     private static ArrayList<WorldItem> worldItemsToSpawn = new ArrayList<>();
     public static ArrayList<Scorpion> updatableScorpion = new ArrayList<>();
     public static ArrayList<Beetle> updatableBeetle = new ArrayList<>();
+    public static ArrayList<Mummy> updatableMummy = new ArrayList<>();
 
     public static void main(String[] args) {
         World w = new World();
@@ -66,6 +67,9 @@ public class World extends JPanel {
                     }
                     for(int i = 0; i < updatableBeetle.size(); i++){
                         updatableBeetle.get(i).update();
+                    }
+                    for(int i = 0; i < updatableMummy.size(); i++){
+                        updatableMummy.get(i).update();
                     }
                         System.out.println("X: " + w.player.getX() + " Y: " + w.player.getY());
                         for(int i = 0; i < worldItems.size(); i++)
@@ -115,6 +119,13 @@ public class World extends JPanel {
             BufferedImage BeetleFrame3 = ImageIO.read(getClass().getResource("/resources/beetle3.gif"));
             Beetle.ImageFrames(BeetleFrame0, BeetleFrame1, BeetleFrame2, BeetleFrame3);
 
+            //get mummy images
+            BufferedImage MummyFrame0 = ImageIO.read(getClass().getResource("/resources/mummy0.gif"));
+            BufferedImage MummyFrame1 = ImageIO.read(getClass().getResource("/resources/mummy1.gif"));
+            BufferedImage MummyFrame2 = ImageIO.read(getClass().getResource("/resources/mummy2.gif"));
+            BufferedImage MummyFrame3 = ImageIO.read(getClass().getResource("/resources/mummy3.gif"));
+            Mummy.ImageFrames(MummyFrame0, MummyFrame1, MummyFrame2, MummyFrame3);
+
             //set the border wall image
             borderWall = new BorderWall();
             borderWall.setImg(ImageIO.read(getClass().getResource("/resources/Block.gif")));
@@ -142,7 +153,7 @@ public class World extends JPanel {
 
             //set the mummy image
             mummy = new Mummy();
-
+            worldItemsToSpawn.add(mummy);
 
             //set the potion image
             potion = new Potion();
