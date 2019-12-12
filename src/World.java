@@ -51,6 +51,7 @@ public class World extends JPanel {
 
     public static ArrayList<WorldItem> worldItems = new ArrayList<>();
     private static ArrayList<WorldItem> worldItemsToSpawn = new ArrayList<>();
+    public static ArrayList<Scorpion> updatableScorpion = new ArrayList<>();
 
     public static void main(String[] args) {
         World w = new World();
@@ -59,6 +60,10 @@ public class World extends JPanel {
             while (!gameover) {
                 {
                     w.player.update();
+                    for(int i = 0; i < updatableScorpion.size(); i++)
+                    {
+                        updatableScorpion.get(i).update();
+                    }
                         System.out.println("X: " + w.player.getX() + " Y: " + w.player.getY());
                         for(int i = 0; i < worldItems.size(); i++)
                         {
@@ -86,12 +91,19 @@ public class World extends JPanel {
             player = new Player(1790, 240);
             worldItemsToSpawn.add(player);
 
-            //get player images array
+            //get player images
             BufferedImage ExplorerFrame0 = ImageIO.read(getClass().getResource("/resources/e0.gif"));
             BufferedImage ExplorerFrame1 = ImageIO.read(getClass().getResource("/resources/e1.gif"));
             BufferedImage ExplorerFrame2 = ImageIO.read(getClass().getResource("/resources/e2.gif"));
             BufferedImage ExplorerFrame3 = ImageIO.read(getClass().getResource("/resources/e3.gif"));
             Player.ImageFrames(ExplorerFrame0, ExplorerFrame1, ExplorerFrame2, ExplorerFrame3);
+
+            //get scorpion images
+            BufferedImage ScorpionFrame0 = ImageIO.read(getClass().getResource("/resources/scorpion0.gif"));
+            BufferedImage ScorpionFrame1 = ImageIO.read(getClass().getResource("/resources/scorpion1.gif"));
+            BufferedImage ScorpionFrame2 = ImageIO.read(getClass().getResource("/resources/scorpion2.gif"));
+            BufferedImage ScorpionFrame3 = ImageIO.read(getClass().getResource("/resources/scorpion3.gif"));
+            Scorpion.ImageFrames(ScorpionFrame0, ScorpionFrame1, ScorpionFrame2, ScorpionFrame3);
 
             //set the border wall image
             borderWall = new BorderWall();
@@ -123,6 +135,8 @@ public class World extends JPanel {
 
             //set the potion image
             potion = new Potion();
+            potion.setImg(ImageIO.read(getClass().getResource("/resources/Potion.gif")));
+            worldItemsToSpawn.add(potion);
 
 
             //set the scarab image
@@ -131,6 +145,7 @@ public class World extends JPanel {
 
             //set the scorpion image
             scorpion = new Scorpion();
+            worldItemsToSpawn.add(scorpion);
 
 
             //set the sword image
@@ -139,7 +154,7 @@ public class World extends JPanel {
             worldItemsToSpawn.add(sword);
 
             //set treasure_1 image
-            treasure_1 = new Treasure_1();
+            treasure_1 = new Treasure_1(-100, -100);
             treasure_1.setImg(ImageIO.read(getClass().getResource("/resources/Treasure1.gif")));
             worldItemsToSpawn.add(treasure_1);
 
