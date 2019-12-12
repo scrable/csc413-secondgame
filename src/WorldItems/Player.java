@@ -17,9 +17,14 @@ public class Player extends WorldItem {
     private boolean RightPressed;
     private boolean LeftPressed;
     private boolean shootPressed;
+    private boolean scarabPressed;
+
+    private long timeScarabActivated = 0;
+    private long timeSwordActivated = 0;
 
     private boolean hasSword = false;
     private boolean swordActive = false;
+    private boolean scarabActive = false;
 
     private static BufferedImage[] movementFrames = new BufferedImage[4];
 
@@ -29,6 +34,8 @@ public class Player extends WorldItem {
 
     //starting HP
     private int health = 3;
+
+    private int scarabCount = 0;
 
     private int score = 0;
 
@@ -77,6 +84,8 @@ public class Player extends WorldItem {
 
     public void toggleShootPressed() { shootPressed = true; }
 
+    public void toggleScarabPressed() { scarabPressed = true; }
+
     public void unToggleUpPressed() {
         this.UpPressed = false;
     }
@@ -93,18 +102,15 @@ public class Player extends WorldItem {
         this.LeftPressed = false;
     }
 
-    public void unToggleShootPressed() { this.shootPressed = false; }
-
-    public int getPx() {
-        return px;
+    public void unToggleShootPressed() {
+        this.deactivateSword();
+        this.shootPressed = false;
     }
+
+    public void unToggleScarabPressed() { scarabPressed = false; }
 
     private void setPx(int px) {
         this.px = px;
-    }
-
-    public int getPy() {
-        return py;
     }
 
     private void setPy(int py) {
@@ -125,6 +131,10 @@ public class Player extends WorldItem {
 
     public int getScore(){
         return score;
+    }
+
+    public int getScarabCount(){
+        return scarabCount;
     }
 
     public void respawn(){
@@ -148,7 +158,13 @@ public class Player extends WorldItem {
         if(this.shootPressed){
             this.activateSword();
         }
-        else this.deactivateSword();
+        if(this.scarabPressed){
+            this.activateScarab();
+        }
+        else {
+            checkScarab();
+            checkSword();
+        }
 
         this.checkScreenEdge();
     }
@@ -174,11 +190,48 @@ public class Player extends WorldItem {
     }
 
     private void activateSword(){
-        this.swordActive = true;
+        if(hasSword && !swordActive) {
+            this.swordActive = true;
+            timeSwordActivated = System.currentTimeMillis();
+        }
     }
 
     private void deactivateSword(){
         this.swordActive = false;
+    }
+
+    private void activateScarab() {
+        if(this.scarabCount > 0 && !scarabActive) {
+            this.scarabActive = true;
+            timeScarabActivated = System.currentTimeMillis();
+            scarabCount--;
+        }
+    }
+
+    private void checkScarab(){
+        if(System.currentTimeMillis() - timeScarabActivated > 5000){
+            scarabActive = false;
+        }
+    }
+
+    private void checkSword(){
+        if(swordActive) {
+            if (System.currentTimeMillis() - timeSwordActivated > 1000) {
+                if(score - 100 < 0)
+                    score = 0;
+                else
+                    score -= 100;
+                timeSwordActivated = System.currentTimeMillis();
+            }
+        }
+    }
+
+    public boolean scarabActive(){
+        return scarabActive;
+    }
+
+    public void addScarab(){
+        this.scarabCount++;
     }
 
     private void checkScreenEdge() {
