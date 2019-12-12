@@ -167,8 +167,6 @@ public class Scorpion extends WorldItem {
 
     @Override
     public void collisions() {
-        //collide with player
-        //collide with any kind of walls4
         for (int i = 0; i < World.worldItems.size(); i++) {
             WorldItem item = World.worldItems.get(i);
             if (item instanceof Player) {
@@ -180,6 +178,10 @@ public class Scorpion extends WorldItem {
                     if (this.currentDirection.equals("right") && item.getX() > this.getX() && item.getX() - this.getX() < 350
                         || this.currentDirection.equals("left") && item.getX() < this.getX() && this.getX() - item.getX() < 350)
                         movespeed = 3;
+                    else if(this.currentDirection.equals("left") && item.getX() > this.getX()
+                            || this.currentDirection.equals("right") && item.getX() < this.getX()){
+                        movespeed = 1;
+                    }
                 }
                 else movespeed = 1;
 
