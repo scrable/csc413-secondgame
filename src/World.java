@@ -22,6 +22,7 @@ public class World extends JPanel {
     private static boolean victory = false;
     private BufferedImage world;
     private BufferedImage bottomPanel;
+    private BufferedImage scarabCountImage;
     private BufferedImage victoryScreen;
     private BufferedImage gameOverScreen;
     private Graphics2D buffer;
@@ -62,6 +63,8 @@ public class World extends JPanel {
             while (!gameover) {
                 {
                     w.player.update();
+
+                    //these 3 loops should really be abstracted better but i ran out of time
                     for(int i = 0; i < updatableScorpion.size(); i++) {
                         updatableScorpion.get(i).update();
                     }
@@ -71,13 +74,13 @@ public class World extends JPanel {
                     for(int i = 0; i < updatableMummy.size(); i++){
                         updatableMummy.get(i).update();
                     }
-                        System.out.println("X: " + w.player.getX() + " Y: " + w.player.getY());
-                        for(int i = 0; i < worldItems.size(); i++)
-                        {
-                            worldItems.get(i).collisions();
-                        }
-                        w.repaint();
+//                        System.out.println("X: " + w.player.getX() + " Y: " + w.player.getY());
+                    for(int i = 0; i < worldItems.size(); i++)
+                    {
+                        worldItems.get(i).collisions();
                     }
+                    w.repaint();
+                }
                 Thread.sleep(1000 / 144);
             }
         } catch (InterruptedException ignored) {
@@ -163,6 +166,8 @@ public class World extends JPanel {
 
             //set the scarab image
             scarab = new Scarab();
+            scarab.setImg(ImageIO.read(getClass().getResource("/resources/Scarab.gif")));
+            worldItemsToSpawn.add(scarab);
 
 
             //set the scorpion image
@@ -203,6 +208,9 @@ public class World extends JPanel {
             //load the victory screen
             victoryScreen = ImageIO.read(getClass().getResource("/resources/Congratulation.gif"));
 
+            //load scarab count image
+            scarabCountImage = ImageIO.read(getClass().getResource("/resources/Scarab.gif"));
+
 
             for (WorldItem worldItem : worldItemsToSpawn) {
                 worldItem.spawn();
@@ -213,7 +221,7 @@ public class World extends JPanel {
         }
 
         //spawn instances of keylisteners
-        input1 = new UserInput(player, KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_SPACE);
+        input1 = new UserInput(player, KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_SPACE, KeyEvent.VK_E);
 
         this.jf.setLayout(new BorderLayout());
 
@@ -310,10 +318,13 @@ public class World extends JPanel {
 
         g2.drawImage(bottomPanel, SPLITSCREEN_WIDTH/2 - bottomPanel.getWidth()/2, SPLITSCREEN_HEIGHT-bottomPanel.getHeight() - 8, null);
 
+        g2.drawImage(scarabCountImage, 380,SPLITSCREEN_HEIGHT - scarabCountImage.getHeight(null) - 10, null);
+
         //draw the player score
         g2.setFont(new Font("Calibri", Font.BOLD, 20));
         g2.setColor(Color.black);
         g2.drawString(Integer.toString(player.getScore()), 690, SPLITSCREEN_HEIGHT - 18);
+        g2.drawString("x" + player.getScarabCount(), 420, SPLITSCREEN_HEIGHT - 18);
 
         //draw player's lives count
         for(int i = 0; i < player.getHealth(); i++)
