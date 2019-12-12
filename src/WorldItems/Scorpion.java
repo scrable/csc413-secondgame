@@ -186,7 +186,6 @@ public class Scorpion extends WorldItem {
                 if (thisRectangle.intersects(itemRectangle)) {
                     ((Player) item).setHealth(((Player) item).getHealth() - 1);
                     ((Player) item).respawn();
-                    World.worldItems.remove(this);
                 }
             }
             else if(item instanceof Wall){

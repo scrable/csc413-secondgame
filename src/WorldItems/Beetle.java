@@ -67,8 +67,6 @@ public class Beetle extends WorldItem {
         World.updatableBeetle.add(temp_b1);
         World.worldItems.add(temp_b1);
 
-        //67, 1954
-        //up
         temp_b1 = new Beetle();
         temp_b1.setImg(movementFrames[0]);
         temp_b1.setX(67);
@@ -77,8 +75,6 @@ public class Beetle extends WorldItem {
         World.updatableBeetle.add(temp_b1);
         World.worldItems.add(temp_b1);
 
-        //520, 1764
-        //up
         temp_b1 = new Beetle();
         temp_b1.setImg(movementFrames[0]);
         temp_b1.setX(520);
@@ -87,8 +83,6 @@ public class Beetle extends WorldItem {
         World.updatableBeetle.add(temp_b1);
         World.worldItems.add(temp_b1);
 
-        //1568, 1700
-        //down
         temp_b1 = new Beetle();
         temp_b1.setImg(movementFrames[0]);
         temp_b1.setX(1568);
@@ -97,8 +91,6 @@ public class Beetle extends WorldItem {
         World.updatableBeetle.add(temp_b1);
         World.worldItems.add(temp_b1);
 
-        //1917, 2070
-        //up
         temp_b1 = new Beetle();
         temp_b1.setImg(movementFrames[0]);
         temp_b1.setX(1917);
@@ -148,7 +140,6 @@ public class Beetle extends WorldItem {
                 if (thisRectangle.intersects(itemRectangle)) {
                     ((Player) item).setHealth(((Player) item).getHealth() - 1);
                     ((Player) item).respawn();
-                    World.worldItems.remove(this);
                 }
             }
             else if(item instanceof Wall){
