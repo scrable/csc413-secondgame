@@ -5,18 +5,13 @@ import src.World;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.util.Random;
+
 
 public class Mummy extends WorldItem {
-//    String currentHorizontalDirection = "left";
-//    String currentVerticalDirection = "up";
     String currentDirection = "left";
-    boolean chasing = false;
     int movespeed = 1;
     int imageIndex = 0;
     private long imageChanged = 0;
-    private long vertcalDirectionChanged = 0;
-    private long horizontalDirectionChanged = 0;
     private long directionChanged = 0;
 
     private static BufferedImage[] movementFrames = new BufferedImage[4];
@@ -77,44 +72,32 @@ public class Mummy extends WorldItem {
     }
 
     public void update(){
+        if (currentDirection.equals("left")) {
+            this.setX(this.getX() - movespeed);
+        } else if (currentDirection.equals("right")) {
+            this.setX(this.getX() + movespeed);
+        }
+        else if (currentDirection.equals("up")) {
+            this.setY(this.getY() - movespeed);
+        } else if (currentDirection.equals("down")) {
+            this.setY(this.getY() + movespeed);
+        }
 
-
-
-        //move around freely
-        if(!chasing) {
-            if (currentDirection.equals("left")) {
-//                System.out.println("jeffrey" + randomNumber);
-                this.setX(this.getX() - movespeed);
-            } else if (currentDirection.equals("right")) {
-                this.setX(this.getX() + movespeed);
+        if (System.currentTimeMillis() - directionChanged > 550) {
+            int randomNumber = (int)(Math.random() * 500) + 1;
+            if (randomNumber % 4 == 0) {
+                currentDirection = "left";
             }
-//            if (randomNumber % 2 == 0) {
-                else if (currentDirection.equals("up")) {
-                    this.setY(this.getY() - movespeed);
-                } else if (currentDirection.equals("down")) {
-                    this.setY(this.getY() + movespeed);
-                }
-                //this.swapVerticalDirection();
-//            }
-
-
-            if (System.currentTimeMillis() - directionChanged > 550) {
-                int randomNumber = (int)(Math.random() * 500) + 1;
-                if (randomNumber % 4 == 0) {
-                    currentDirection = "left";
-                }
-                else if(randomNumber % 4 == 1){
-                    currentDirection = "right";
-                }
-                else if(randomNumber % 4 == 2){
-                    currentDirection = "down";
-                }
-                else if(randomNumber % 4 == 3){
-                    currentDirection = "up";
-                }
-                directionChanged = System.currentTimeMillis();
+            else if(randomNumber % 4 == 1){
+                currentDirection = "right";
             }
-
+            else if(randomNumber % 4 == 2){
+                currentDirection = "down";
+            }
+            else if(randomNumber % 4 == 3){
+                currentDirection = "up";
+            }
+            directionChanged = System.currentTimeMillis();
         }
     }
 
@@ -165,7 +148,6 @@ public class Mummy extends WorldItem {
                 if (thisRectangle.intersects(itemRectangle)) {
                     this.swapDirection();
                     this.update();
-
                 }
             }
         }
