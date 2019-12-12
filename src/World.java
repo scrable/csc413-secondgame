@@ -301,6 +301,11 @@ public class World extends JPanel {
             g2.drawImage(victoryScreen, 0, 0, SPLITSCREEN_WIDTH, SPLITSCREEN_HEIGHT, null);
             gameover = true;
         }
+        if(player.getHealth() == 0)
+        {
+            g2.drawImage(gameOverScreen, 0, 0, SPLITSCREEN_WIDTH, SPLITSCREEN_HEIGHT, null);
+            gameover = true;
+        }
     }
 
     public static void setGameoverVictory(boolean victory) {
