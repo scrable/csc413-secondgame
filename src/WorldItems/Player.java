@@ -9,6 +9,8 @@ import java.awt.image.BufferedImage;
 public class Player extends WorldItem {
     private int px;
     private int py;
+    private int initialX;
+    private int initialY;
     private int moveSpeed = 5;
     private boolean UpPressed;
     private boolean DownPressed;
@@ -33,6 +35,8 @@ public class Player extends WorldItem {
     public Player(int x, int y) {
         this.setX(x);
         this.setY(y);
+        this.initialX = x;
+        this.initialY = y;
 
         //check border here to make sure the initial position is valid
         checkBorder();
@@ -121,6 +125,11 @@ public class Player extends WorldItem {
 
     public int getScore(){
         return score;
+    }
+
+    public void respawn(){
+        this.setX(initialX);
+        this.setY(initialY);
     }
 
     public void update() {
