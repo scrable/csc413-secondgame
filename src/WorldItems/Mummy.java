@@ -103,9 +103,116 @@ public class Mummy extends WorldItem {
 
     @Override
     public void spawn() {
-        Mummy m1 = new Mummy();
-        m1.setX(1690);
-        m1.setY(240);
+        Mummy m1;
+
+        m1 = new Mummy();
+        m1.setX(1570);
+        m1.setY(844);
+        m1.setImg(movementFrames[0]);
+        World.updatableMummy.add(m1);
+        World.worldItems.add(m1);
+
+        m1 = new Mummy();
+        m1.setX(1845);
+        m1.setY(844);
+        m1.setImg(movementFrames[0]);
+        World.updatableMummy.add(m1);
+        World.worldItems.add(m1);
+
+        m1 = new Mummy();
+        m1.setX(2065);
+        m1.setY(844);
+        m1.setImg(movementFrames[0]);
+        World.updatableMummy.add(m1);
+        World.worldItems.add(m1);
+
+        m1 = new Mummy();
+        m1.setX(2065);
+        m1.setY(1230);
+        m1.setImg(movementFrames[0]);
+        World.updatableMummy.add(m1);
+        World.worldItems.add(m1);
+
+        m1 = new Mummy();
+        m1.setX(1570);
+        m1.setY(1230);
+        m1.setImg(movementFrames[0]);
+        World.updatableMummy.add(m1);
+        World.worldItems.add(m1);
+
+        m1 = new Mummy();
+        m1.setX(1845);
+        m1.setY(1230);
+        m1.setImg(movementFrames[0]);
+        World.updatableMummy.add(m1);
+        World.worldItems.add(m1);
+
+        m1 = new Mummy();
+        m1.setX(1804);
+        m1.setY(1925);
+        m1.setImg(movementFrames[0]);
+        World.updatableMummy.add(m1);
+        World.worldItems.add(m1);
+
+        m1 = new Mummy();
+        m1.setX(1705);
+        m1.setY(1812);
+        m1.setImg(movementFrames[0]);
+        World.updatableMummy.add(m1);
+        World.worldItems.add(m1);
+
+        m1 = new Mummy();
+        m1.setX(488);
+        m1.setY(1359);
+        m1.setImg(movementFrames[0]);
+        World.updatableMummy.add(m1);
+        World.worldItems.add(m1);
+
+        m1 = new Mummy();
+        m1.setX(868);
+        m1.setY(1469);
+        m1.setImg(movementFrames[0]);
+        World.updatableMummy.add(m1);
+        World.worldItems.add(m1);
+
+        m1 = new Mummy();
+        m1.setX(1023);
+        m1.setY(1874);
+        m1.setImg(movementFrames[0]);
+        World.updatableMummy.add(m1);
+        World.worldItems.add(m1);
+
+        m1 = new Mummy();
+        m1.setX(520);
+        m1.setY(1889);
+        m1.setImg(movementFrames[0]);
+        World.updatableMummy.add(m1);
+        World.worldItems.add(m1);
+
+        m1 = new Mummy();
+        m1.setX(451);
+        m1.setY(612);
+        m1.setImg(movementFrames[0]);
+        World.updatableMummy.add(m1);
+        World.worldItems.add(m1);
+
+        m1 = new Mummy();
+        m1.setX(451);
+        m1.setY(472);
+        m1.setImg(movementFrames[0]);
+        World.updatableMummy.add(m1);
+        World.worldItems.add(m1);
+
+        m1 = new Mummy();
+        m1.setX(801);
+        m1.setY(472);
+        m1.setImg(movementFrames[0]);
+        World.updatableMummy.add(m1);
+        World.worldItems.add(m1);
+
+        m1 = new Mummy();
+        m1.setX(801);
+        m1.setY(472);
         m1.setImg(movementFrames[0]);
         World.updatableMummy.add(m1);
         World.worldItems.add(m1);
@@ -137,8 +244,14 @@ public class Mummy extends WorldItem {
                 else movespeed = 1;
 
                 if (thisRectangle.intersects(itemRectangle)) {
-                    ((Player) item).setHealth(((Player) item).getHealth() - 1);
-                    ((Player) item).respawn();
+                    if(((Player) item).scarabActive()){
+                        ((Player) item).addScore(500);
+                        World.worldItems.remove(this);
+                    }
+                    else {
+                        ((Player) item).setHealth(((Player) item).getHealth() - 1);
+                        ((Player) item).respawn();
+                    }
                 }
             }
             else if(item instanceof Wall){
