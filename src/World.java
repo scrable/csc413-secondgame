@@ -52,6 +52,7 @@ public class World extends JPanel {
     public static ArrayList<WorldItem> worldItems = new ArrayList<>();
     private static ArrayList<WorldItem> worldItemsToSpawn = new ArrayList<>();
     public static ArrayList<Scorpion> updatableScorpion = new ArrayList<>();
+    public static ArrayList<Beetle> updatableBeetle = new ArrayList<>();
 
     public static void main(String[] args) {
         World w = new World();
@@ -60,9 +61,11 @@ public class World extends JPanel {
             while (!gameover) {
                 {
                     w.player.update();
-                    for(int i = 0; i < updatableScorpion.size(); i++)
-                    {
+                    for(int i = 0; i < updatableScorpion.size(); i++) {
                         updatableScorpion.get(i).update();
+                    }
+                    for(int i = 0; i < updatableBeetle.size(); i++){
+                        updatableBeetle.get(i).update();
                     }
                         System.out.println("X: " + w.player.getX() + " Y: " + w.player.getY());
                         for(int i = 0; i < worldItems.size(); i++)
@@ -105,6 +108,13 @@ public class World extends JPanel {
             BufferedImage ScorpionFrame3 = ImageIO.read(getClass().getResource("/resources/scorpion3.gif"));
             Scorpion.ImageFrames(ScorpionFrame0, ScorpionFrame1, ScorpionFrame2, ScorpionFrame3);
 
+            //get beetle images
+            BufferedImage BeetleFrame0 = ImageIO.read(getClass().getResource("/resources/beetle0.gif"));
+            BufferedImage BeetleFrame1 = ImageIO.read(getClass().getResource("/resources/beetle1.gif"));
+            BufferedImage BeetleFrame2 = ImageIO.read(getClass().getResource("/resources/beetle2.gif"));
+            BufferedImage BeetleFrame3 = ImageIO.read(getClass().getResource("/resources/beetle3.gif"));
+            Beetle.ImageFrames(BeetleFrame0, BeetleFrame1, BeetleFrame2, BeetleFrame3);
+
             //set the border wall image
             borderWall = new BorderWall();
             borderWall.setImg(ImageIO.read(getClass().getResource("/resources/Block.gif")));
@@ -127,6 +137,7 @@ public class World extends JPanel {
 
             //set the beetle image
             beetle = new Beetle();
+            worldItemsToSpawn.add(beetle);
 
 
             //set the mummy image
