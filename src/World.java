@@ -177,7 +177,7 @@ public class World extends JPanel {
 
             //set the sword image
             sword = new Sword();
-            sword.setImg(ImageIO.read(getClass().getResource("/resources/sword.gif")));
+            sword.setImg(ImageIO.read(getClass().getResource("/resources/Sword.gif")));
             worldItemsToSpawn.add(sword);
 
             //set treasure_1 image
