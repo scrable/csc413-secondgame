@@ -3,8 +3,18 @@ package src.WorldItems;
 import src.World;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class Sword extends WorldItem{
+    private static Image img;
+
+    public void setImg(BufferedImage image) {
+        img = image;
+    }
+    public Image getImg() {
+        return img;
+    }
+
     @Override
     public void drawImage(Graphics g, int x, int y) {
         g.drawImage(getImg(), x, y, null);
@@ -12,6 +22,12 @@ public class Sword extends WorldItem{
 
     @Override
     public void spawn() {
+        this.setX(2060);
+        this.setY(1820);
+        World.worldItems.add(this);
+    }
+
+    public void spawnNewSword(){
         this.setX(2060);
         this.setY(1820);
         World.worldItems.add(this);

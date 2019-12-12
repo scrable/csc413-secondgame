@@ -11,7 +11,7 @@ public class Player extends WorldItem {
     private int py;
     private int initialX;
     private int initialY;
-    private int moveSpeed = 5;
+    private int moveSpeed = 1;
     private boolean UpPressed;
     private boolean DownPressed;
     private boolean RightPressed;
@@ -140,6 +140,9 @@ public class Player extends WorldItem {
     public void respawn(){
         this.setX(initialX);
         this.setY(initialY);
+        Sword s = new Sword();
+        s.spawnNewSword();
+        hasSword = false;
     }
 
     public void update() {
