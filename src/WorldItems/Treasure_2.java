@@ -5,28 +5,36 @@ import src.World;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class Treasure_2 extends Treasure{
+public class Treasure_2 extends Treasure
+{
     private static Image img;
 
-    public void setImg(BufferedImage image) {
-        img = image;
-    }
-    public Image getImg() {
-        return img;
-    }
-
-    public Treasure_2(int x, int y){
+    public Treasure_2(int x, int y)
+    {
         this.setX(x);
         this.setY(y);
         setTreasureValue(100);
     }
+
+    public Image getImg()
+    {
+        return img;
+    }
+
+    public void setImg(BufferedImage image)
+    {
+        img = image;
+    }
+
     @Override
-    public void drawImage(Graphics g, int x, int y) {
+    public void drawImage(Graphics g, int x, int y)
+    {
         g.drawImage(getImg(), x, y, null);
     }
 
     @Override
-    public void spawn() {
+    public void spawn()
+    {
         Treasure_2 temp_t2 = new Treasure_2(2060, 70);
         World.worldItems.add(temp_t2);
         temp_t2 = new Treasure_2(2094, 612);

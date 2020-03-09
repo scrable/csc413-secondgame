@@ -10,16 +10,23 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class World extends JPanel {
+public class World extends JPanel
+{
 
     //multiples of 32, which is wall size
     public static final int SCREEN_WIDTH = 2176;
     public static final int SCREEN_HEIGHT = 2176;
     public static final int SPLITSCREEN_WIDTH = 900;
     public static final int SPLITSCREEN_HEIGHT = 700;
+    public static JLabel label;
+    public static ArrayList<WorldItem> worldItems = new ArrayList<>();
+    public static ArrayList<Scorpion> updatableScorpion = new ArrayList<>();
+    public static ArrayList<Beetle> updatableBeetle = new ArrayList<>();
+    public static ArrayList<Mummy> updatableMummy = new ArrayList<>();
     private static Rectangle r;
     private static boolean gameover = false;
     private static boolean victory = false;
+    private static ArrayList<WorldItem> worldItemsToSpawn = new ArrayList<>();
     private BufferedImage world;
     private BufferedImage bottomPanel;
     private BufferedImage scarabCountImage;
@@ -27,12 +34,8 @@ public class World extends JPanel {
     private BufferedImage gameOverScreen;
     private Graphics2D buffer;
     private JFrame jf;
-    public static JLabel label;
     private Map m;
     private UserInput input1;
-
-
-
     //worlditems
     private BorderWall borderWall;
     private InnerWall innerWall;
@@ -50,32 +53,32 @@ public class World extends JPanel {
     private Treasure_2 treasure_2;
     private PlayerLife playerLife;
 
-    public static ArrayList<WorldItem> worldItems = new ArrayList<>();
-    private static ArrayList<WorldItem> worldItemsToSpawn = new ArrayList<>();
-    public static ArrayList<Scorpion> updatableScorpion = new ArrayList<>();
-    public static ArrayList<Beetle> updatableBeetle = new ArrayList<>();
-    public static ArrayList<Mummy> updatableMummy = new ArrayList<>();
-
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         World w = new World();
         w.init();
-        try {
-            while (!gameover) {
+        try
+        {
+            while (!gameover)
+            {
                 {
                     w.player.update();
 
                     //these 3 loops should really be abstracted better but i ran out of time
-                    for(int i = 0; i < updatableScorpion.size(); i++) {
+                    for (int i = 0; i < updatableScorpion.size(); i++)
+                    {
                         updatableScorpion.get(i).update();
                     }
-                    for(int i = 0; i < updatableBeetle.size(); i++){
+                    for (int i = 0; i < updatableBeetle.size(); i++)
+                    {
                         updatableBeetle.get(i).update();
                     }
-                    for(int i = 0; i < updatableMummy.size(); i++){
+                    for (int i = 0; i < updatableMummy.size(); i++)
+                    {
                         updatableMummy.get(i).update();
                     }
 //                        System.out.println("X: " + w.player.getX() + " Y: " + w.player.getY());
-                    for(int i = 0; i < worldItems.size(); i++)
+                    for (int i = 0; i < worldItems.size(); i++)
                     {
                         worldItems.get(i).collisions();
                     }
@@ -83,16 +86,25 @@ public class World extends JPanel {
                 }
                 Thread.sleep(1000 / 144);
             }
-        } catch (InterruptedException ignored) {
+        }
+        catch (InterruptedException ignored)
+        {
         }
     }
 
-    private void init() {
+    public static void setGameoverVictory(boolean victory)
+    {
+        World.victory = victory;
+    }
+
+    private void init()
+    {
         this.jf = new JFrame("Pyramid Panic");
         label = new JLabel();
         this.world = new BufferedImage(World.SCREEN_WIDTH, World.SCREEN_HEIGHT, BufferedImage.TYPE_INT_RGB);
 
-        try {
+        try
+        {
             //load the background
             m = new Map();
             m.setImg(ImageIO.read(getClass().getResource("/resources/Background2.bmp")));
@@ -145,7 +157,7 @@ public class World extends JPanel {
             worldItemsToSpawn.add(vpw);
 
             //set the horizontal wall image
-            hpw = new H_PushableWall(- 100, -100);
+            hpw = new H_PushableWall(-100, -100);
             hpw.setImg(ImageIO.read(getClass().getResource("/resources/Block_hor.gif")));
             worldItemsToSpawn.add(hpw);
 
@@ -212,11 +224,14 @@ public class World extends JPanel {
             scarabCountImage = ImageIO.read(getClass().getResource("/resources/Scarab.gif"));
 
 
-            for (WorldItem worldItem : worldItemsToSpawn) {
+            for (WorldItem worldItem : worldItemsToSpawn)
+            {
                 worldItem.spawn();
             }
 
-        } catch (IOException ex) {
+        }
+        catch (IOException ex)
+        {
             System.out.println(ex.getMessage());
         }
 
@@ -245,7 +260,8 @@ public class World extends JPanel {
     }
 
     @Override
-    public void paintComponent(Graphics g) {
+    public void paintComponent(Graphics g)
+    {
         Graphics2D g2 = (Graphics2D) g;
         buffer = this.world.createGraphics();
         super.paintComponent(g2);
@@ -254,60 +270,81 @@ public class World extends JPanel {
         this.m.drawImage(buffer);
 
         //draw each instance of WorldItem
-        for (int i = 0; i < worldItems.size(); i++) {
+        for (int i = 0; i < worldItems.size(); i++)
+        {
             WorldItem worldItem = worldItems.get(i);
             worldItem.drawImage(buffer, worldItem.getX(), worldItem.getY());
         }
 
         int x1 = player.getX() - SPLITSCREEN_WIDTH * 20 / 40;
-        if ((player.getX() - SPLITSCREEN_WIDTH * 20 / 40) < 0) {
+        if ((player.getX() - SPLITSCREEN_WIDTH * 20 / 40) < 0)
+        {
             x1 = 0;
-        } else if ((player.getX() + SPLITSCREEN_WIDTH * 20 / 40) > (SCREEN_WIDTH)) {
+        }
+        else if ((player.getX() + SPLITSCREEN_WIDTH * 20 / 40) > (SCREEN_WIDTH))
+        {
             x1 = SCREEN_WIDTH - SPLITSCREEN_WIDTH * 20 / 20;
         }
 
         int y1 = player.getY() - SPLITSCREEN_HEIGHT / 2;
-        if ((player.getY() - SPLITSCREEN_HEIGHT / 2) < 0) {
+        if ((player.getY() - SPLITSCREEN_HEIGHT / 2) < 0)
+        {
             y1 = 0;
-        } else if ((player.getY() + SPLITSCREEN_HEIGHT / 2) > (SCREEN_HEIGHT)) {
+        }
+        else if ((player.getY() + SPLITSCREEN_HEIGHT / 2) > (SCREEN_HEIGHT))
+        {
             y1 = SCREEN_HEIGHT - SPLITSCREEN_HEIGHT;
         }
 
         BufferedImage surroundingPlayer = world.getSubimage(x1, y1, SPLITSCREEN_WIDTH, SPLITSCREEN_HEIGHT);
 
-        if(player.getHasSword() && !player.getSwordActive()){
+        if (player.getHasSword() && !player.getSwordActive())
+        {
             int Y_Maximum;
             int Y_Minimum;
             int X_Maximum;
             int X_Minimum;
 
-            if ((player.getX() - SPLITSCREEN_WIDTH / 2) < 0) {
+            if ((player.getX() - SPLITSCREEN_WIDTH / 2) < 0)
+            {
                 X_Maximum = Integer.max(SPLITSCREEN_WIDTH / 2 - (SPLITSCREEN_WIDTH / 2 - player.getX()) + SPLITSCREEN_WIDTH / 4, SPLITSCREEN_WIDTH / 4);
                 X_Minimum = Integer.max(X_Maximum - SPLITSCREEN_WIDTH / 2, 0);
-            } else if ((player.getX() + SPLITSCREEN_WIDTH / 2) > SCREEN_WIDTH) {
+            }
+            else if ((player.getX() + SPLITSCREEN_WIDTH / 2) > SCREEN_WIDTH)
+            {
 
                 X_Maximum = Integer.min(SPLITSCREEN_WIDTH - (SCREEN_WIDTH - player.getX()) + SPLITSCREEN_WIDTH / 4, SPLITSCREEN_WIDTH);
                 X_Minimum = X_Maximum - SPLITSCREEN_WIDTH / 2;
 
-            } else {
+            }
+            else
+            {
                 X_Minimum = SPLITSCREEN_WIDTH / 4;
                 X_Maximum = SPLITSCREEN_WIDTH * 3 / 4;
             }
 
-            if ((player.getY() - SPLITSCREEN_HEIGHT / 2) < 0) {
+            if ((player.getY() - SPLITSCREEN_HEIGHT / 2) < 0)
+            {
                 Y_Maximum = Integer.max(SPLITSCREEN_HEIGHT / 2 - (SPLITSCREEN_HEIGHT / 2 - player.getY()) + SPLITSCREEN_HEIGHT / 4, SPLITSCREEN_HEIGHT / 4);
                 Y_Minimum = Integer.max(Y_Maximum - SPLITSCREEN_HEIGHT / 2, 0);
-            } else if ((player.getY() + SPLITSCREEN_HEIGHT / 2) > SCREEN_HEIGHT) {
+            }
+            else if ((player.getY() + SPLITSCREEN_HEIGHT / 2) > SCREEN_HEIGHT)
+            {
                 Y_Maximum = Integer.min(SPLITSCREEN_HEIGHT - (SCREEN_HEIGHT - player.getY()) + SPLITSCREEN_HEIGHT / 4, SPLITSCREEN_HEIGHT);
                 Y_Minimum = Y_Maximum - SPLITSCREEN_HEIGHT / 2;
-            } else {
+            }
+            else
+            {
                 Y_Minimum = SPLITSCREEN_HEIGHT / 4;
                 Y_Maximum = SPLITSCREEN_HEIGHT * 3 / 4;
             }
 
-            for (int i = 0; i < SPLITSCREEN_WIDTH; i++) {
-                for (int j = 0; j < SPLITSCREEN_HEIGHT; j++) {
-                    if (i < X_Minimum || i > X_Maximum || j < Y_Minimum || j > Y_Maximum) {
+            for (int i = 0; i < SPLITSCREEN_WIDTH; i++)
+            {
+                for (int j = 0; j < SPLITSCREEN_HEIGHT; j++)
+                {
+                    if (i < X_Minimum || i > X_Maximum || j < Y_Minimum || j > Y_Maximum)
+                    {
                         surroundingPlayer.setRGB(i, j, 0);
                     }
                 }
@@ -316,9 +353,9 @@ public class World extends JPanel {
 
         g2.drawImage(surroundingPlayer, 0, 0, null);
 
-        g2.drawImage(bottomPanel, SPLITSCREEN_WIDTH/2 - bottomPanel.getWidth()/2, SPLITSCREEN_HEIGHT-bottomPanel.getHeight() - 8, null);
+        g2.drawImage(bottomPanel, SPLITSCREEN_WIDTH / 2 - bottomPanel.getWidth() / 2, SPLITSCREEN_HEIGHT - bottomPanel.getHeight() - 8, null);
 
-        g2.drawImage(scarabCountImage, 380,SPLITSCREEN_HEIGHT - scarabCountImage.getHeight(null) - 10, null);
+        g2.drawImage(scarabCountImage, 380, SPLITSCREEN_HEIGHT - scarabCountImage.getHeight(null) - 10, null);
 
         //draw the player score
         g2.setFont(new Font("Calibri", Font.BOLD, 20));
@@ -327,21 +364,18 @@ public class World extends JPanel {
         g2.drawString("x" + player.getScarabCount(), 420, SPLITSCREEN_HEIGHT - 18);
 
         //draw player's lives count
-        for(int i = 0; i < player.getHealth(); i++)
-            g2.drawImage(playerLife.getImg(), 210 + 34*i, SPLITSCREEN_HEIGHT - playerLife.getImg().getHeight(null) - 10, null);
+        for (int i = 0; i < player.getHealth(); i++)
+            g2.drawImage(playerLife.getImg(), 210 + 34 * i, SPLITSCREEN_HEIGHT - playerLife.getImg().getHeight(null) - 10, null);
 
-        if(victory){
+        if (victory)
+        {
             g2.drawImage(victoryScreen, 0, 0, SPLITSCREEN_WIDTH, SPLITSCREEN_HEIGHT, null);
             gameover = true;
         }
-        if(player.getHealth() == 0)
+        if (player.getHealth() == 0)
         {
             g2.drawImage(gameOverScreen, 0, 0, SPLITSCREEN_WIDTH, SPLITSCREEN_HEIGHT, null);
             gameover = true;
         }
-    }
-
-    public static void setGameoverVictory(boolean victory) {
-        World.victory = victory;
     }
 }
