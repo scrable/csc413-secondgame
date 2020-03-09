@@ -1,3 +1,5 @@
 package src.WorldItems;
 
-public abstract class Wall extends WorldItem {}
+public abstract class Wall extends WorldItem
+{
+}

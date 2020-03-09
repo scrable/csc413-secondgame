@@ -6,25 +6,38 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
-public class Scorpion extends WorldItem {
+public class Scorpion extends WorldItem
+{
+    private static BufferedImage[] movementFrames = new BufferedImage[4];
     String currentDirection = "left";
     int movespeed = 1;
     int imageIndex = 0;
     private long imageChanged = 0;
 
-    private static BufferedImage[] movementFrames = new BufferedImage[4];
+    public static void ImageFrames(BufferedImage ScorpionFrame0, BufferedImage ScorpionFrame1, BufferedImage ScorpionFrame2, BufferedImage ScorpionFrame3)
+    {
+        movementFrames[0] = ScorpionFrame0;
+        movementFrames[1] = ScorpionFrame1;
+        movementFrames[2] = ScorpionFrame2;
+        movementFrames[3] = ScorpionFrame3;
+    }
 
     @Override
-    public void drawImage(Graphics g, int x, int y) {
-        if (imageIndex <= 3) {
+    public void drawImage(Graphics g, int x, int y)
+    {
+        if (imageIndex <= 3)
+        {
             this.setImg(movementFrames[imageIndex]);
-        } else {
+        }
+        else
+        {
             this.setImg(movementFrames[0]);
             imageIndex = 0;
         }
 
         //reset the time
-        if (System.currentTimeMillis() - imageChanged > 50) {
+        if (System.currentTimeMillis() - imageChanged > 50)
+        {
             imageIndex++;
             imageChanged = System.currentTimeMillis();
         }
@@ -32,10 +45,12 @@ public class Scorpion extends WorldItem {
         AffineTransform rotation = AffineTransform.getTranslateInstance(this.getX(), this.getY());
         Graphics2D g2d = (Graphics2D) g;
 
-        if(currentDirection.equals("left")){
+        if (currentDirection.equals("left"))
+        {
             rotation.rotate(0, this.getImg().getWidth(null) / 2.0, this.getImg().getHeight(null) / 2.0);
         }
-        else if(currentDirection.equals("right")){
+        else if (currentDirection.equals("right"))
+        {
             rotation.rotate(Math.toRadians(180), this.getImg().getWidth(null) / 2.0, this.getImg().getHeight(null) / 2.0);
         }
 
@@ -43,7 +58,8 @@ public class Scorpion extends WorldItem {
     }
 
     @Override
-    public void spawn() {
+    public void spawn()
+    {
         Scorpion temp_S1 = new Scorpion();
         temp_S1.setImg(movementFrames[0]);
         temp_S1.setX(1790);
@@ -166,35 +182,42 @@ public class Scorpion extends WorldItem {
     }
 
     @Override
-    public void collisions() {
-        for (int i = 0; i < World.worldItems.size(); i++) {
+    public void collisions()
+    {
+        for (int i = 0; i < World.worldItems.size(); i++)
+        {
             WorldItem item = World.worldItems.get(i);
-            if (item instanceof Player) {
+            if (item instanceof Player)
+            {
                 Rectangle thisRectangle = new Rectangle(this.getX() + this.getAx(), this.getY() + this.getAy(), this.getImg().getWidth(null), this.getImg().getHeight(null));
                 Rectangle itemRectangle = new Rectangle(item.getX(), item.getY(), item.getImg().getWidth(null), item.getImg().getHeight(null));
 
-                if(item.getY() + item.getImg().getHeight(null) / 2 > this.getY() && item.getY() < this.getY() + this.getImg().getHeight(null))
+                if (item.getY() + item.getImg().getHeight(null) / 2 > this.getY() && item.getY() < this.getY() + this.getImg().getHeight(null))
                 {
                     if (this.currentDirection.equals("right") && item.getX() > this.getX() && item.getX() - this.getX() < 350
-                        || this.currentDirection.equals("left") && item.getX() < this.getX() && this.getX() - item.getX() < 350)
+                            || this.currentDirection.equals("left") && item.getX() < this.getX() && this.getX() - item.getX() < 350)
                         movespeed = 3;
-                    else if(this.currentDirection.equals("left") && item.getX() > this.getX()
-                            || this.currentDirection.equals("right") && item.getX() < this.getX()){
+                    else if (this.currentDirection.equals("left") && item.getX() > this.getX()
+                            || this.currentDirection.equals("right") && item.getX() < this.getX())
+                    {
                         movespeed = 1;
                     }
                 }
                 else movespeed = 1;
 
-                if (thisRectangle.intersects(itemRectangle)) {
+                if (thisRectangle.intersects(itemRectangle))
+                {
                     ((Player) item).setHealth(((Player) item).getHealth() - 1);
                     ((Player) item).respawn();
                 }
             }
-            else if(item instanceof Wall){
+            else if (item instanceof Wall)
+            {
                 Rectangle thisRectangle = new Rectangle(this.getX(), this.getY(), this.getImg().getWidth(null), this.getImg().getHeight(null));
                 Rectangle itemRectangle = new Rectangle(item.getX(), item.getY(), item.getImg().getWidth(null), item.getImg().getHeight(null));
 
-                if (thisRectangle.intersects(itemRectangle)) {
+                if (thisRectangle.intersects(itemRectangle))
+                {
                     this.swapDirection();
                     this.update();
                 }
@@ -202,27 +225,26 @@ public class Scorpion extends WorldItem {
         }
     }
 
-    public static void ImageFrames(BufferedImage ScorpionFrame0, BufferedImage ScorpionFrame1, BufferedImage ScorpionFrame2, BufferedImage ScorpionFrame3){
-        movementFrames[0] = ScorpionFrame0;
-        movementFrames[1] = ScorpionFrame1;
-        movementFrames[2] = ScorpionFrame2;
-        movementFrames[3] = ScorpionFrame3;
-    }
-
-    public void swapDirection(){
-        if(this.currentDirection.equals("left")){
+    public void swapDirection()
+    {
+        if (this.currentDirection.equals("left"))
+        {
             this.currentDirection = "right";
         }
-        else if(this.currentDirection.equals("right")){
+        else if (this.currentDirection.equals("right"))
+        {
             this.currentDirection = "left";
         }
     }
 
-    public void update(){
-        if(currentDirection.equals("left")){
+    public void update()
+    {
+        if (currentDirection.equals("left"))
+        {
             this.setX(this.getX() - movespeed);
         }
-        else if(currentDirection.equals("right")){
+        else if (currentDirection.equals("right"))
+        {
             this.setX(this.getX() + movespeed);
         }
     }

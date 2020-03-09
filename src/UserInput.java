@@ -5,16 +5,18 @@ import src.WorldItems.Player;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class UserInput implements KeyListener {
-    private Player player;
+public class UserInput implements KeyListener
+{
     private final int up;
     private final int down;
     private final int right;
     private final int left;
     private final int shoot;
     private final int scarab;
+    private Player player;
 
-    UserInput(Player player, int up, int down, int left, int right, int shoot, int scarab) {
+    UserInput(Player player, int up, int down, int left, int right, int shoot, int scarab)
+    {
         this.player = player;
         this.up = up;
         this.down = down;
@@ -25,52 +27,67 @@ public class UserInput implements KeyListener {
     }
 
     @Override
-    public void keyTyped(KeyEvent ke) {
+    public void keyTyped(KeyEvent ke)
+    {
 
     }
 
     @Override
-    public void keyPressed(KeyEvent ke) {
+    public void keyPressed(KeyEvent ke)
+    {
         int keyPressed = ke.getKeyCode();
-        if (keyPressed == up) {
+        if (keyPressed == up)
+        {
             this.player.toggleUpPressed();
         }
-        if (keyPressed == down) {
+        if (keyPressed == down)
+        {
             this.player.toggleDownPressed();
         }
-        if (keyPressed == left) {
+        if (keyPressed == left)
+        {
             this.player.toggleLeftPressed();
         }
-        if (keyPressed == right) {
+        if (keyPressed == right)
+        {
             this.player.toggleRightPressed();
         }
-        if (keyPressed == shoot) {
+        if (keyPressed == shoot)
+        {
             this.player.toggleShootPressed();
         }
-        if (keyPressed == scarab) {
+        if (keyPressed == scarab)
+        {
             this.player.toggleScarabPressed();
         }
     }
 
     @Override
-    public void keyReleased(KeyEvent ke) {
+    public void keyReleased(KeyEvent ke)
+    {
         int keyReleased = ke.getKeyCode();
-        if (keyReleased == up) {
+        if (keyReleased == up)
+        {
             this.player.unToggleUpPressed();
         }
-        if (keyReleased == down) {
+        if (keyReleased == down)
+        {
             this.player.unToggleDownPressed();
         }
-        if (keyReleased == left) {
+        if (keyReleased == left)
+        {
             this.player.unToggleLeftPressed();
         }
-        if (keyReleased == right) {
+        if (keyReleased == right)
+        {
             this.player.unToggleRightPressed();
         }
-        if (keyReleased == shoot) {
+        if (keyReleased == shoot)
+        {
             this.player.unToggleShootPressed();
         }
-        if (keyReleased == scarab) {
+        if (keyReleased == scarab)
+        {
             this.player.unToggleScarabPressed();
         }
     }
